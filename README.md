@@ -46,6 +46,7 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 ║ 📋 Feature Checklist: (✅ = Done, 🛠️ = In Progress, ❌ = Not Started) 
 
 ╚══════════════════════════════════════════════════════════════╝
+
 This is updated as of 12/25/24 8:00AM
 
 - [ 🛠️ ] Dynamic Login/Sign-Up Pages  
