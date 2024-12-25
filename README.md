@@ -8,7 +8,7 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 
 ╔════════════════════════════════════════════╗
 
-║--------------------------- 🎯 Core Objectives  ------------------------------║
+║ 🎯 Core Objectives 
 
 ╚════════════════════════════════════════════╝
 1. 🌟 Deliver intuitive webpages for all users.  
@@ -21,7 +21,9 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 ## 📜 Change Log
 
 ╔═════════════════════════════════════════════════════╗
-║ 🚀 Version Updates:                                 ║
+
+║ 🚀 Version Updates:                                 
+
 ╚═════════════════════════════════════════════════════╝
 
 ### v1.0.0 - Initial Launch
@@ -40,7 +42,9 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 ## 🔄 Status of Features
 
 ╔══════════════════════════════════════════════════════════════╗
-║ 📋 Feature Checklist: (✅ = Done, 🛠️ = In Progress, ❌ = Not Started) ║
+
+║ 📋 Feature Checklist: (✅ = Done, 🛠️ = In Progress, ❌ = Not Started) 
+
 ╚══════════════════════════════════════════════════════════════╝
 This is updated as of 12/25/24 8:00AM
 
@@ -58,7 +62,9 @@ This is updated as of 12/25/24 8:00AM
 # 👋 About Me
 
 ╔════════════════════════════════════╗
-║       🌟 Who Am I? 🌟              ║
+
+║       🌟 Who Am I? 🌟              
+
 ╚════════════════════════════════════╝
 
 Hello! I'm a **beginner front-end developer** exploring the exciting world of web development.  
@@ -69,7 +75,9 @@ I've been learning for **3 months**, and I’m passionate about experimenting wi
 ## 💡 Projects
 
 ╔════════════════════════════════════════════════════╗
-║ ⚠️ Experimental Ideas (Not All Are Polished!) ⚠️  ║
+
+║ ⚠️ Experimental Ideas (Not All Are Polished!) ⚠️  
+
 ╚════════════════════════════════════════════════════╝
 
 - Some of my projects are **just ideas** to explore and learn.  
@@ -82,7 +90,9 @@ I've been learning for **3 months**, and I’m passionate about experimenting wi
 ## 🔄 Current Status
 
 ╔════════════════════════════════════════════════════╗
-║ 🚀 What I’m Working On Now:                       ║
+
+║ 🚀 What I’m Working On Now:                       
+
 ╚════════════════════════════════════════════════════╝
 
 ✅ Learning the basics of **HTML**, **CSS**, and **JavaScript**.  
@@ -91,14 +101,5 @@ I've been learning for **3 months**, and I’m passionate about experimenting wi
 🛠️ Exploring **animations and interactivity**.  
 ❌ Not yet working on back-end integration or advanced frameworks.  
 
----
 
-## 🌟 Collaboration Invites
-
-╔═════════════════════════════╗
-║ 🌟 Let’s Grow Together! 🌟   ║
-╚═════════════════════════════╝
-
-💬 I'm open to feedback, collaborations, and project suggestions!  
-Let’s learn, build, and create something amazing together! 🚀
 
