@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Login & Sign-Up</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            transition: background-color 0.3s;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjQ4cHgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTI0IDMxLjI4OGMwLjA3NSAxLjAzMSAwLjE0IDEuODA1IDAuMjggMi40NjFsMy41MDEgMC4yODhjMS4wNTcgMC4wMDUgMi4wMjMtMC4yMjQgMy4wMTItMC42NjNsMi4zMzIgMi4zMzIgNy45NjQgNy45NjRjMC4zNzggMC4zNzggMC43MDEgMC44MjQgMC43MDEgMS4yNjEgMCwwLjM0LS4wMzggMC42Ny0uMDk3IDAuOTVjLTAuMTE1IDAuNDE3LTAuMTk1IDEuMDk2LTAuMDk1IDEuNzMzTDE4LjIyOCAzMi4zNjNjLTAuMDEgMC4xMTUtMC4wMTIgMC4yMjUtMC4wMTIgMC4zMzJjMC4wIDAuMTA4IDAuMDIyIDAuMjA3IDAuMDY3IDAuMzE0bC0wLjMwNiAzLjI4OGMtMC4xMjUgMC4zMDMtMC4xNzIgMC43MTktMC4xNjggMS4xODggMC4wMSAwLjY3NyAwLjAzIDIuNjE2IDAuMDIzIDMuMzg4bDQuOTU2IDQuOTU1YzAuMzI2IDAuMzI3IDAuODI0IDAuMzI2IDEuMTg4IDBsMy4yNDItMy4yNDJjMC40NzMtMC40NzMgMC40NzMtMS4xODIgMC0xLjY1MS0wLjQ3My0wLjQ3My0xLjE4Mi0wLjQ3My0xLjY1MSAwbC00Ljk1Ni00Ljk1NWMtMC4zMzEtMC4zMzEtMC44NzctMC4zMzEtMS4xMDggMGMtMC4zNjIgMC4wMDAtMC43NjYuMDEtMS4xMTIuMDAwTDE4LjEyMiAxMy43NzZjLTAtMS4yMTktMS4wOTQtMi4wMzItMi4wMzItMi4wMzIgMC0xLjIwOS0xLjA5NC0yLjAzMi0yLjAzMi0yLjAzMiAwLTEuMjE5LTEuMDk0LTIuMDMyLTIuMDMyLTIuMDMySDYuNTc4Yy0xLjEwMSAwLTEuOTk3IDEuMDk0LTEuOTk3IDIuMDMyIDAtMS4xMjUgMS4wOTQtMi4wMzIgMS45OTctMi4wMzIgMS4xMjUgMCAyLjAzMiAxLjA5NCAyLjAzMiAyLjAzMkgxMy4wNjNjMC4wNzMgMS4wMDQgMC4xMzUgMS44MDUgMC4yODggMi40NjFsMy41MDEgMC4yODhjMS4wNTcgMC4wMDUgMi4wMjMtMC4yMjQgMy4wMTItMC42NjNsMi4zMzIgMi4zMzIgNy45NjQgNy45NjRjMC4zNzggMC4zNzggMC43MDEgMC44MjQgMC43MDEgMS4yNjEgMCwwLjM0LS4wMzggMC42Ny0uMDk3IDAuOTVjLTAuMTE1IDAuNDE3LTAuMTk1IDEuMDk2LTAuMDk1IDEuNzMzTDQ4IDMxLjI4OHoiLz48L3N2Zz4=') no-repeat center;
+            background-size: contain;
+        }
+
+        /* Container */
+        .auth-container {
+            display: flex;
+            width: 800px;
+            max-width: 90%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+            background-color: #ff7f50;
+            color: #ffffff;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .sidebar p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        /* Forms Container */
+        .forms-container {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+
+        /* Toggle Buttons */
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .form-toggle button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #555555;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .form-toggle button.active {
+            color: #ff7f50;
+        }
+
+        .form-toggle button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: #ff7f50;
+            border-radius: 2px;
+        }
+
+        /* Forms */
+        form {
+            display: none;
+            flex-direction: column;
+        }
+
+        form.active {
+            display: flex;
+        }
+
+        /* Floating Labels */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: none;
+            outline: none;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff7f50;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            background-color: #f9f9f9;
+            padding: 0 4px;
+            color: #999;
+            font-size: 1em;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 8px;
+            font-size: 0.8em;
+            color: #ff7f50;
+        }
+
+        /* Submit Buttons */
+        button.submit-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #ff7f50;
+            color: #ffffff;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button.submit-btn:hover {
+            background-color: #e76e3c;
+        }
+
+        /* Social Login */
+        .social-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-login p {
+            margin-bottom: 10px;
+            color: #777777;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* CSS-Only Social Media Icons */
+        .social-btn.facebook {
+            background-color: #3b5998;
+            color: #ffffff;
+        }
+
+        .social-btn.twitter {
+            background-color: #1da1f2;
+            color: #ffffff;
+        }
+
+        .social-btn.instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            color: #ffffff;
+        }
+
+        .social-btn.linkedin {
+            background-color: #0077b5;
+            color: #ffffff;
+        }
+
+        .social-btn.pinterest {
+            background-color: #bd081c;
+            color: #ffffff;
+        }
+
+        .social-btn.youtube {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+
+        /* Social Icons Content */
+        .social-btn.facebook::before {
+            content: "f";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .social-btn.twitter::before {
+            content: "t";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .social-btn.instagram::before {
+            content: "i";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .social-btn.linkedin::before {
+            content: "in";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .social-btn.pinterest::before {
+            content: "p";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .social-btn.youtube::before {
+            content: "Y";
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Theme Dark Mode */
+        body.dark {
+            background-color: #121212;
+        }
+
+        body.dark .auth-container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark .sidebar {
+            background-color: #333333;
+        }
+
+        body.dark .sidebar h2,
+        body.dark .sidebar p {
+            color: #ffffff;
+        }
+
+        body.dark .forms-container {
+            background-color: #2c2c2c;
+        }
+
+        body.dark .form-toggle button {
+            color: #bbbbbb;
+        }
+
+        body.dark .form-toggle button.active {
+            color: #ff7f50;
+        }
+
+        body.dark .form-toggle button.active::after {
+            background-color: #ff7f50;
+        }
+
+        body.dark .input-group input {
+            border: 1px solid #555555;
+            background-color: #3a3a3a;
+            color: #ffffff;
+        }
+
+        body.dark .input-group label {
+            background-color: #2c2c2c;
+            color: #bbbbbb;
+        }
+
+        body.dark .input-group input:focus + label,
+        body.dark .input-group input:not(:placeholder-shown) + label {
+            color: #ff7f50;
+        }
+
+        body.dark button.submit-btn {
+            background-color: #ff7f50;
+        }
+
+        body.dark button.submit-btn:hover {
+            background-color: #e76e3c;
+        }
+
+        body.dark .social-login p {
+            color: #aaaaaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                width: 100%;
+                height: 100vh;
+            }
+
+            .sidebar {
+                width: 100%;
+                align-items: center;
+                text-align: center;
+            }
+
+            .forms-container {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode"></div>
+
+    <!-- Authentication Container -->
+    <div class="auth-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Welcome!</h2>
+            <p>Join us to explore amazing features and connect with the community. Whether you want to login or sign up, we're here to help you every step of the way.</p>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="forms-container">
+            <!-- Form Toggle Buttons -->
+            <div class="form-toggle">
+                <button id="loginToggleBtn" class="active">Login</button>
+                <button id="signupToggleBtn">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="active">
+                <div class="input-group">
+                    <input type="email" id="loginEmail" required placeholder=" ">
+                    <label for="loginEmail">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" required placeholder=" ">
+                    <label for="loginPassword">Password</label>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+
+                <div class="social-login">
+                    <p>Or login with</p>
+                    <div class="social-buttons">
+                        <div class="social-btn facebook" title="Facebook"></div>
+                        <div class="social-btn twitter" title="Twitter"></div>
+                        <div class="social-btn instagram" title="Instagram"></div>
+                        <div class="social-btn linkedin" title="LinkedIn"></div>
+                        <div class="social-btn pinterest" title="Pinterest"></div>
+                        <div class="social-btn youtube" title="YouTube"></div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Sign-Up Form -->
+            <form id="signupForm">
+                <div class="input-group">
+                    <input type="text" id="signupUsername" required placeholder=" ">
+                    <label for="signupUsername">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="signupEmail" required placeholder=" ">
+                    <label for="signupEmail">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupPassword" required placeholder=" ">
+                    <label for="signupPassword">Password</label>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+
+                <div class="social-login">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <div class="social-btn facebook" title="Facebook"></div>
+                        <div class="social-btn twitter" title="Twitter"></div>
+                        <div class="social-btn instagram" title="Instagram"></div>
+                        <div class="social-btn linkedin" title="LinkedIn"></div>
+                        <div class="social-btn pinterest" title="Pinterest"></div>
+                        <div class="social-btn youtube" title="YouTube"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Between Login and Sign-Up Forms
+        const loginToggleBtn = document.getElementById('loginToggleBtn');
+        const signupToggleBtn = document.getElementById('signupToggleBtn');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        loginToggleBtn.addEventListener('click', () => {
+            loginToggleBtn.classList.add('active');
+            signupToggleBtn.classList.remove('active');
+            loginForm.classList.add('active');
+            signupForm.classList.remove('active');
+        });
+
+        signupToggleBtn.addEventListener('click', () => {
+            signupToggleBtn.classList.add('active');
+            loginToggleBtn.classList.remove('active');
+            signupForm.classList.add('active');
+            loginForm.classList.remove('active');
+        });
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
+    </script>
+</body>
+</html>

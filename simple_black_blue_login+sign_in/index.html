@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showcase Login and Sign-Up</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Animated Background -->
+    <div class="animated-background">
+      <div class="floating-shapes"></div> <!-- For particles/shapes effect -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="modal">
+      <div class="tabs">
+        <button id="login-tab" class="tab-btn active">Login</button>
+        <button id="signup-tab" class="tab-btn">Sign Up</button>
+      </div>
+
+      <!-- Login Section -->
+      <div id="login-section" class="section active">
+        <h2>Login with Your Account</h2>
+        <form>
+          <input type="text" placeholder="Username" required>
+          <input type="password" placeholder="Password" required>
+          <div class="checkbox-container">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">- Remember Me</label>
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+          <p class="switch-text">Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a></p>
+        </form>
+
+        <h3>Or login with:</h3>
+        <div class="alternative-login">
+          <button class="social-btn snapchat">Snapchat</button>
+          <button class="social-btn spotify">Spotify</button>
+          <button class="social-btn discord">Discord</button>
+        </div>
+      </div>
+
+      <!-- Sign-Up Section -->
+      <div id="signup-section" class="section">
+        <h2>Create Your Account</h2>
+        <form>
+          <input type="email" placeholder="Enter Email" required>
+          <input type="text" placeholder="Choose Username" required>
+          <input type="password" placeholder="Choose Password" required>
+          <button type="submit" class="submit-btn">Create Account</button>
+          <p class="switch-text">Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- github Link -->
+    <a href="https://github.com/Razberiwaffl?tab=repositories" class="discord-link" target="_blank">Connect with razberi on github</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
