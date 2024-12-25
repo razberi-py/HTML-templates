@@ -1,8 +1,6 @@
 # 🚀 Project Name: Html Templates
 
-╔════════════════════════════════════╗
-║       🌟 The Vision 🌟             ║
-╚════════════════════════════════════╝
+╔════════════════════════════════════╗ ║ 🌟 The Vision 🌟 ║ ╚════════════════════════════════════╝
 
 Welcome to the **[ HTML - Templates ]** repository! This project is focused on achieving cutting-edge innovation while blending functionality with stunning design.
 
