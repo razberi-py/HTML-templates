@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Display Template</title>
+  <style>
+    /* Reset and Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Arial', sans-serif; color: #f5f5f5; background: linear-gradient(to bottom, #0a0a23, #121243); overflow-x: hidden; }
+
+    /* Navigation Bar */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 10, 35, 0.95);
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    nav a {
+      margin: 0 20px;
+      font-weight: bold;
+      color: #ddd;
+      font-size: 1.1em;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #4cc9f0; }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(120deg, #1a1a40, #3a2a5e);
+      color: #ff6584;
+      text-align: center;
+    }
+    #hero h1 {
+      font-size: 3.5em;
+      animation: fadeIn 2s ease;
+    }
+    #hero p {
+      max-width: 700px;
+      font-size: 1.2em;
+      margin-top: 15px;
+      animation: fadeIn 3s ease;
+    }
+    #hero .cta {
+      margin-top: 30px;
+      padding: 15px 40px;
+      background: #4cc9f0;
+      color: #121243;
+      font-weight: bold;
+      font-size: 1.2em;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+      animation: fadeIn 3.5s ease;
+    }
+    #hero .cta:hover { transform: scale(1.1); }
+
+    /* Animations */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Services Section */
+    #services {
+      padding: 80px 20px;
+      background: #121243;
+      text-align: center;
+    }
+    #services h2 { color: #4cc9f0; }
+    .services-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .service-item {
+      width: 280px;
+      padding: 30px;
+      background: #1e1e3f;
+      color: #fff;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .service-item:hover {
+      background: #4cc9f0;
+      color: #121243;
+      transform: translateY(-10px);
+    }
+    .service-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    /* Meet Our Team Section */
+    #team {
+      padding: 80px 20px;
+      background: linear-gradient(to right, #3a2a5e, #1a1a40);
+      text-align: center;
+    }
+    #team h2 { color: #ff6584; }
+    .team-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .team-member {
+      width: 250px;
+      padding: 20px;
+      background: #292950;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s;
+      overflow: hidden;
+    }
+    .team-member img {
+      width: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+    .team-member:hover img { transform: scale(1.05); }
+    .team-member h3 { margin-top: 15px; color: #f5f5f5; }
+    .team-member p { color: #d1d1d1; }
+
+    /* Testimonials Section */
+    #testimonials {
+      padding: 80px 20px;
+      background: #121243;
+      text-align: center;
+    }
+    .testimonial {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #292950;
+      border-radius: 10px;
+      text-align: left;
+      color: #f5f5f5;
+      position: relative;
+    }
+    .testimonial::before {
+      content: "“";
+      font-size: 3em;
+      position: absolute;
+      top: -15px;
+      left: -10px;
+      color: #4cc9f0;
+    }
+    .testimonial h3 { color: #ff6584; margin-bottom: 10px; }
+
+    /* Contact Section */
+    #contact {
+      padding: 80px 20px;
+      background: linear-gradient(to right, #3a2a5e, #1a1a40);
+      text-align: center;
+    }
+    #contact h2 { color: #4cc9f0; }
+    .contact-form {
+      max-width: 600px;
+      margin: auto;
+      background: #1c1c3a;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      background: #292950;
+      border: none;
+      color: #f5f5f5;
+      border-radius: 5px;
+    }
+    .contact-form button {
+      padding: 12px 30px;
+      background: #4cc9f0;
+      color: #121243;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .contact-form button:hover { background: #3fa5d9; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#services">Services</a>
+    <a href="#team">Team</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <h1>Welcome to the Future of Design</h1>
+    <p>Elevate your brand with advanced web solutions that captivate, engage, and inspire.</p>
+    <button class="cta">Discover More</button>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">📱</div>
+        <h3>Responsive Design</h3>
+        <p>Mobile-first approach ensuring smooth and flexible layouts on all devices.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🌐</div>
+        <h3>SEO Optimization</h3>
+        <p>Improved visibility to attract the right audience and boost engagement.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">⚡</div>
+        <h3>Fast Performance</h3>
+        <p>Blazing speed for a seamless user experience that keeps visitors coming back.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🎨</div>
+        <h3>Unique Aesthetics</h3>
+        <p>Stand-out designs tailored to convey your brand’s personality and vision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet Our Team Section -->
+  <section id="team">
+    <h2>Meet Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="https://via.placeholder.com/250" alt="Team Member">
+        <h3>John Doe</h3>
+        <p>Lead Designer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/250" alt="Team Member">
+        <h3>Jane Smith</h3>
+        <p>Front-End Developer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/250" alt="Team Member">
+        <h3>Robert Brown</h3>
+        <p>Back-End Developer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonial">
+      <h3>Exceptional Quality</h3>
+      <p>"The team delivered beyond our expectations. The website is both beautiful and highly functional."</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Get in Touch</h2>
+    <div class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <button>Send Message</button>
+    </div>
+  </section>
+</body>
+</html>

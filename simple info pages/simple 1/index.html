@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro-Level One-Page Website</title>
+  <style>
+    /* Reset and Body */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; scroll-behavior: smooth; background: #000; color: #ddd; overflow-x: hidden; }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      transition: background 0.5s ease;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+    }
+    nav a {
+      margin: 0 15px;
+      color: #ddd;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: color 0.3s, transform 0.3s;
+    }
+    nav a:hover {
+      color: #ff3366;
+      transform: scale(1.1);
+    }
+
+    /* Sections */
+    section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 50px 20px;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    section.show { opacity: 1; transform: translateY(0); }
+    
+    /* Section Styles */
+    #home {
+      background: linear-gradient(120deg, #1a1a40, #3a2a5e, #2b3b8f);
+      color: #ff3366;
+    }
+    #about { background: linear-gradient(120deg, #2b3b8f, #573f6f); }
+    #services { background: linear-gradient(120deg, #3a2a5e, #1a1a40); }
+    #portfolio { background: linear-gradient(120deg, #573f6f, #2b3b8f); }
+    #contact { background: linear-gradient(120deg, #1a1a40, #3a2a5e); }
+
+    /* Services Section */
+    .service {
+      max-width: 800px;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: rgba(255, 51, 102, 0.2);
+      border-radius: 10px;
+      border: 1px solid #ff3366;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .service:hover {
+      background: rgba(255, 51, 102, 0.5);
+      transform: scale(1.05);
+    }
+
+    /* Portfolio Hover Effects */
+    .portfolio-item {
+      width: 150px;
+      height: 150px;
+      margin: 15px;
+      background: #222;
+      color: #ff3366;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      border: 2px solid #ff3366;
+      border-radius: 8px;
+      transition: transform 0.4s, background 0.3s, color 0.3s;
+    }
+    .portfolio-item:hover {
+      transform: scale(1.15);
+      background: #ff3366;
+      color: #000;
+      border-color: #ddd;
+    }
+
+    /* Footer */
+    footer {
+      padding: 20px;
+      background: #111;
+      color: #888;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    footer a {
+      color: #ff3366;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer a:hover { color: #ddd; }
+
+    /* Smooth Fade on Scroll */
+    .fade { transition: opacity 1.5s ease-in; }
+
+    /* Button Style */
+    button {
+      padding: 12px 24px;
+      background: #ff3366;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.3s;
+    }
+    button:hover {
+      background: #ff6699;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Sections -->
+  <section id="home" class="fade">
+    <h1>Welcome to Our World</h1>
+    <p>Your journey to a stunning website starts here. We combine creativity, technology, and strategy to bring your vision to life.</p>
+  </section>
+
+  <section id="about" class="fade">
+    <h2>About Us</h2>
+    <p>With a passion for web design and development, we create high-quality, tailor-made digital experiences. Our team specializes in taking your concepts and transforming them into interactive, engaging websites that captivate users and drive results.</p>
+  </section>
+
+  <section id="services" class="fade">
+    <h2>Our Services</h2>
+    <div class="service">
+      <h3>Design & Development</h3>
+      <p>From initial sketches to final deployment, we handle all aspects of web design and development to ensure your site stands out.</p>
+    </div>
+    <div class="service">
+      <h3>Responsive & Mobile-Friendly</h3>
+      <p>Your site will look amazing and perform flawlessly on all devices, from desktop computers to mobile phones.</p>
+    </div>
+    <div class="service">
+      <h3>SEO Optimization</h3>
+      <p>Our SEO strategies help you reach a wider audience, improving your visibility and search engine rankings.</p>
+    </div>
+    <div class="service">
+      <h3>Brand Identity</h3>
+      <p>We create cohesive branding across your digital assets to strengthen your brand and build user trust.</p>
+    </div>
+  </section>
+
+  <section id="portfolio" class="fade">
+    <h2>Our Portfolio</h2>
+    <p>Take a look at some of our recent projects that showcase our range and expertise.</p>
+    <div class="portfolio-item">Project 1</div>
+    <div class="portfolio-item">Project 2</div>
+    <div class="portfolio-item">Project 3</div>
+    <div class="portfolio-item">Project 4</div>
+    <div class="portfolio-item">Project 5</div>
+  </section>
+
+  <section id="contact" class="fade">
+    <h2>Contact Us</h2>
+    <p>We’d love to discuss your project and explore how we can bring your ideas to life. Reach out and let’s start creating together!</p>
+    <button>Contact Us</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Connect with us:</p>
+    <a href="#">Twitter</a>
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+  </footer>
+
+  <script>
+    // Intersection Observer for Fade-In Animation
+    const faders = document.querySelectorAll('.fade');
+    const appearOptions = { threshold: 0.3 };
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+    faders.forEach(fader => appearOnScroll.observe(fader));
+  </script>
+
+</body>
+</html>

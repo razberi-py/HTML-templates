@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask the Experts Forum with Polls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 20px;
+        }
+        /* Header Styling */
+        .header {
+            background-color: #2c3e50;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #bbb;
+        }
+        /* Question Form Styling */
+        .question-form {
+            margin-top: 20px;
+        }
+        .question-form input, .question-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question-form button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .question-form button:hover {
+            background-color: #2980b9;
+        }
+        /* Question Card Styling */
+        .question-card {
+            background-color: #f9f9fb;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .question-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .question-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        /* Answer Section */
+        .answer-section {
+            padding-left: 30px;
+        }
+        .answer-card {
+            background-color: #eef5fc;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .vote-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .vote-buttons button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        /* Expert Badge */
+        .expert-badge {
+            background-color: #f1c40f;
+            color: white;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            margin-left: 5px;
+        }
+        /* Poll Section */
+        .poll-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #eaf4fc;
+            border-radius: 8px;
+        }
+        .poll-section h2 {
+            font-size: 1.6em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .poll-card {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .poll-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .poll-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .poll-option input[type="radio"] {
+            margin-right: 10px;
+        }
+        .submit-vote {
+            background-color: #27ae60;
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-vote:hover {
+            background-color: #1e8449;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Ask the Experts</h1>
+            <p>Get your tech questions answered by professionals and the community.</p>
+        </div>
+
+        <!-- New Question Form -->
+        <div class="question-form">
+            <h2>Ask a Question</h2>
+            <input type="text" placeholder="Question Title" id="questionTitle">
+            <textarea placeholder="Question Details" rows="5" id="questionDetails"></textarea>
+            <button onclick="postQuestion()">Post Question</button>
+        </div>
+
+        <!-- Display Questions -->
+        <div id="questionsList">
+            <!-- Sample Question Card -->
+            <div class="question-card" id="question1">
+                <h3 class="question-title">What is the future of AI in healthcare?</h3>
+                <p class="question-meta">Posted by John Doe - 3 hours ago</p>
+
+                <!-- Answer Section -->
+                <div class="answer-section">
+                    <div class="answer-card">
+                        <div class="vote-buttons">
+                            <button onclick="upvote(this)">⬆</button>
+                            <span class="vote-count">12</span>
+                            <button onclick="downvote(this)">⬇</button>
+                        </div>
+                        <div>
+                            <p><strong>Dr. Sarah Lee <span class="expert-badge">Expert</span></strong></p>
+                            <p>AI in healthcare has huge potential, especially in diagnostics and personalized medicine.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Poll Section -->
+        <div class="poll-section">
+            <h2>Community Polls</h2>
+
+            <!-- Poll 1 -->
+            <div class="poll-card">
+                <h3>Do you think AI will replace more jobs in the next 5 years?</h3>
+                <div class="poll-option">
+                    <input type="radio" name="poll1" value="yes"> Yes
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll1" value="no"> No
+                </div>
+                <button class="submit-vote" onclick="submitVote('poll1')">Vote</button>
+            </div>
+
+            <!-- Poll 2 -->
+            <div class="poll-card">
+                <h3>Which technology will have the biggest impact in 2024?</h3>
+                <div class="poll-option">
+                    <input type="radio" name="poll2" value="ai"> Artificial Intelligence
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll2" value="blockchain"> Blockchain
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll2" value="5g"> 5G Connectivity
+                </div>
+                <button class="submit-vote" onclick="submitVote('poll2')">Vote</button>
+            </div>
+
+            <!-- Poll 3 -->
+            <div class="poll-card">
+                <h3>What programming language are you most interested in learning?</h3>
+                <div class="poll-option">
+                    <input type="radio" name="poll3" value="python"> Python
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll3" value="javascript"> JavaScript
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll3" value="rust"> Rust
+                </div>
+                <button class="submit-vote" onclick="submitVote('poll3')">Vote</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Voting and Posting -->
+    <script>
+        // Sample function for posting a new question
+        function postQuestion() {
+            const title = document.getElementById('questionTitle').value;
+            const details = document.getElementById('questionDetails').value;
+            const questionsList = document.getElementById('questionsList');
+
+            if (title && details) {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.innerHTML = `
+                    <h3 class="question-title">${title}</h3>
+                    <p class="question-meta">Posted just now</p>
+                    <div class="answer-section">
+                        <p><em>No answers yet. Be the first to respond!</em></p>
+                    </div>`;
+                
+                questionsList.prepend(questionCard);
+
+                document.getElementById('questionTitle').value = '';
+                document.getElementById('questionDetails').value = '';
+            } else {
+                alert('Please fill out both fields.');
+            }
+        }
+
+        // Sample functions for voting
+        function upvote(button) {
+            const voteCount = button.nextElementSibling;
+            voteCount.textContent = parseInt(voteCount.textContent) + 1;
+        }
+        
+        function downvote(button) {
+            const voteCount = button.previousElementSibling;
+            voteCount.textContent = parseInt(voteCount.textContent) - 1;
+        }
+
+        // Sample function for submitting votes in polls
+        function submitVote(pollId) {
+            const selectedOption = document.querySelector(`input[name="${pollId}"]:checked`);
+            if (selectedOption) {
+                alert(`Thank you for voting: ${selectedOption.value}`);
+            } else {
+                alert('Please select an option before voting.');
+            }
+        }
+    </script>
+</body>
+</html>
