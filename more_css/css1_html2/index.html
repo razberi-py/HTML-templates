@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enhanced Login and Sign Up Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" id="container">
+        <!-- Sign Up Section -->
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <div class="input-container">
+                    <input type="text" placeholder="Name" required />
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                </div>
+                <div class="input-container">
+                    <input type="email" placeholder="Email" required />
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                </div>
+                <div class="input-container">
+                    <input type="password" placeholder="Password" required id="signup-password" />
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                    <div class="password-strength" id="password-strength"></div>
+                </div>
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <!-- Sign In Section -->
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Sign In</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your account</span>
+                <div class="input-container">
+                    <input type="email" placeholder="Email" required />
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                </div>
+                <div class="input-container">
+                    <input type="password" placeholder="Password" required />
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                </div>
+                <a href="#">Forgot your password?</a>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <!-- Overlay Section -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To stay connected, please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your details and start your journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Toggle Functionality and Password Strength -->
+    <script>
+        const container = document.getElementById('container');
+        const passwordInput = document.getElementById('signup-password');
+        const passwordStrength = document.getElementById('password-strength');
+
+        document.getElementById('signUp').addEventListener('click', () => {
+            container.classList.add('right-panel-active');
+        });
+        document.getElementById('signIn').addEventListener('click', () => {
+            container.classList.remove('right-panel-active');
+        });
+
+        // Password Strength Indicator
+        passwordInput.addEventListener('input', () => {
+            const value = passwordInput.value;
+            const strength = getPasswordStrength(value);
+            passwordStrength.style.width = strength + '%';
+            passwordStrength.className = 'password-strength strength-' + Math.floor(strength / 25);
+        });
+
+        function getPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 6) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 25;
+            if (password.match(/[^A-Za-z0-9]/)) strength += 25;
+            return strength;
+        }
+    </script>
+</body>
+</html>
