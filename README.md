@@ -9,6 +9,7 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 ╔════════════════════════════════════════════╗
 
 ║ 🎯 Core Objectives:                        ║
+
 ╚════════════════════════════════════════════╝
 1. 🌟 Deliver intuitive webpages for all users.  
 2. ⚙️ across all platforms.    
