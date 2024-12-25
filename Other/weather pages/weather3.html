@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Neon Weather Dashboard</title>
+  <style>
+    /* Reset and Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0a0a23, #121243);
+      overflow: hidden;
+    }
+
+    /* Weather Dashboard Container */
+    .weather-dashboard {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    /* Keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Current Weather Section */
+    .current-weather {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    /* Location and Condition */
+    .location {
+      font-size: 1.5em;
+      color: #ff33cc;
+      text-shadow: 0 0 8px #ff33cc, 0 0 16px #ff33cc;
+      margin-top: 10px;
+    }
+    .condition {
+      font-size: 1.8em;
+      color: #4cc9f0;
+      text-shadow: 0 0 8px #4cc9f0, 0 0 16px #4cc9f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .weather-icon {
+      font-size: 2.5em;
+    }
+
+    /* Temperature Display */
+    .temperature {
+      font-size: 3.5em;
+      color: #ff33cc;
+      text-shadow: 0 0 10px #ff33cc, 0 0 20px #ff33cc;
+    }
+
+    /* Enhanced Weather Details Section */
+    .details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      justify-content: space-around;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .detail-item {
+      text-align: center;
+      min-width: 100px;
+      transition: color 0.3s;
+    }
+    .detail-item:hover { color: #4cc9f0; }
+
+    /* Extended Forecast Section */
+    .forecast-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+    }
+    .forecast-title {
+      font-size: 1.2em;
+      color: #4cc9f0;
+      text-shadow: 0 0 8px #4cc9f0;
+    }
+    .forecast {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px;
+      scrollbar-width: none;
+    }
+    .forecast-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 8px;
+      min-width: 80px;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .forecast-day:hover { background: rgba(255, 255, 255, 0.15); }
+    .forecast-icon { font-size: 1.5em; }
+
+    /* Map Display */
+    .map-container {
+      margin-top: 20px;
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .map-container iframe { width: 100%; height: 100%; border: none; }
+
+    /* Search Bar */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      width: 100%;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .search-bar button {
+      padding: 12px 20px;
+      background: #ff33cc;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .search-bar button:hover { background: #e1476f; }
+  </style>
+</head>
+<body>
+
+  <!-- Weather Dashboard -->
+  <div class="weather-dashboard">
+
+    <!-- Current Weather Section -->
+    <div class="current-weather">
+      <div class="location" id="location">Tokyo, JP</div>
+      <div class="condition" id="condition">
+        <span id="weather-icon" class="weather-icon">☀️</span>
+        <span>Sunny</span>
+      </div>
+      <div class="temperature" id="temperature">30°C</div>
+    </div>
+    
+    <!-- Enhanced Weather Details -->
+    <div class="details">
+      <div class="detail-item"><span>Humidity</span><strong id="humidity">50%</strong></div>
+      <div class="detail-item"><span>Wind Speed</span><strong id="wind">10 km/h</strong></div>
+      <div class="detail-item"><span>UV Index</span><strong id="uv">5</strong></div>
+      <div class="detail-item"><span>Visibility</span><strong id="visibility">10 km</strong></div>
+      <div class="detail-item"><span>Sunrise</span><strong id="sunrise">5:20 AM</strong></div>
+      <div class="detail-item"><span>Sunset</span><strong id="sunset">6:45 PM</strong></div>
+    </div>
+
+    <!-- Extended Forecast Section -->
+    <div class="forecast-container">
+      <div class="forecast-title">Hourly Forecast</div>
+      <div class="forecast" id="hourly-forecast">
+        <div class="forecast-day"><span>1PM</span><span class="forecast-icon">☀️</span><span>30°C</span></div>
+        <div class="forecast-day"><span>2PM</span><span class="forecast-icon">🌤️</span><span>29°C</span></div>
+        <div class="forecast-day"><span>3PM</span><span class="forecast-icon">🌧️</span><span>27°C</span></div>
+        <div class="forecast-day"><span>4PM</span><span class="forecast-icon">☁️</span><span>25°C</span></div>
+        <div class="forecast-day"><span>5PM</span><span class="forecast-icon">🌥️</span><span>23°C</span></div>
+      </div>
+    </div>
+
+    <!-- Map Display -->
+    <div class="map-container" id="map">
+      <iframe src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Tokyo" allowfullscreen></iframe>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="city" placeholder="Enter city">
+      <button onclick="fetchWeather()">Search</button>
+    </div>
+  </div>
+
+  <script>
+    // Sample Weather Data (for demonstration)
+    const sampleWeatherData = {
+      "New York": {
+        location: "New York, US", condition: "Cloudy", icon: "☁️", temperature: 20, humidity: "70%", wind: "8 km/h", uv: 3, visibility: "8 km", sunrise: "6:15 AM", sunset: "8:05 PM",
+        hourly: [ {time: "1PM", icon: "☁️", temp: "19°C"}, {time: "2PM", icon: "🌧️", temp: "18°C"}, {time: "3PM", icon: "🌥️", temp: "18°C"}, {time: "4PM", icon: "☁️", temp: "17°C"}, {time: "5PM", icon: "🌥️", temp: "16°C"} ]
+      },
+      "Tokyo": {
+        location: "Tokyo, JP", condition: "Sunny", icon: "☀️", temperature: 30, humidity: "50%", wind: "10 km/h", uv: 5, visibility: "10 km", sunrise: "5:20 AM", sunset: "6:45 PM",
+        hourly: [ {time: "1PM", icon: "☀️", temp: "30°C"}, {time: "2PM", icon: "🌤️", temp: "29°C"}, {time: "3PM", icon: "🌧️", temp: "27°C"}, {time: "4PM", icon: "☁️", temp: "25°C"}, {time: "5PM", icon: "🌥️", temp: "23°C"} ]
+      }
+    };
+
+    function fetchWeather() {
+      const city = document.getElementById("city").value;
+      const weather = sampleWeatherData[city];
+
+      if (weather) {
+        updateWeather(weather);
+      } else {
+        alert("City not found. Try 'New York' or 'Tokyo'.");
+      }
+    }
+
+    function updateWeather(weather) {
+      document.getElementById("location").innerText = weather.location;
+      document.getElementById("condition").innerText = weather.condition;
+      document.getElementById("weather-icon").innerText = weather.icon;
+      document.getElementById("temperature").innerText = `${weather.temperature}°C`;
+      document.getElementById("humidity").innerText = weather.humidity;
+      document.getElementById("wind").innerText = weather.wind;
+      document.getElementById("uv").innerText = weather.uv;
+      document.getElementById("visibility").innerText = weather.visibility;
+      document.getElementById("sunrise").innerText = weather.sunrise;
+      document.getElementById("sunset").innerText = weather.sunset;
+
+      // Update hourly forecast
+      const hourlyForecastHTML = weather.hourly.map(hour => `
+        <div class="forecast-day">
+          <span>${hour.time}</span><span class="forecast-icon">${hour.icon}</span><span>${hour.temp}</span>
+        </div>
+      `).join("");
+      document.getElementById("hourly-forecast").innerHTML = hourlyForecastHTML;
+
+      // Update Map
+      document.getElementById("map").querySelector("iframe").src = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(weather.location)}`;
+    }
+  </script>
+
+</body>
+</html>

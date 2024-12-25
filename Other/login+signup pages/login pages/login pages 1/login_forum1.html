@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist Login</title>
+  <style>
+    /* Basic resets */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Background and font */
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container styling */
+    .login-container {
+      background: #ffffff;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    /* Logo */
+    .login-logo {
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #6b6dbf;
+      margin-bottom: 1em;
+      text-shadow: 0px 0px 5px rgba(107, 109, 191, 0.4);
+    }
+
+    /* Title */
+    .login-title {
+      font-size: 1.4em;
+      color: #666;
+      margin-bottom: 1em;
+    }
+
+    /* Input fields */
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      background-color: #fafafa;
+    }
+
+    /* Login button */
+    .login-button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #a4b8e1, #8ad0c1);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      background: linear-gradient(135deg, #8ad0c1, #a4b8e1);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-logo">SimpleLogin</div>
+    <h1 class="login-title">Welcome Back</h1>
+
+    <input type="text" class="input-field" placeholder="Username" required>
+    <input type="password" class="input-field" placeholder="Password" required>
+
+    <button class="login-button">Log In</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetworkTools Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>NetworkTools Pro</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#stresser">IP Stresser</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <!-- Mobile Menu Toggle -->
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Welcome to NetworkTools Pro</h2>
+                <p>Your ultimate solution for network testing and monitoring.</p>
+                <a href="#stresser" class="btn">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Comprehensive Services</h2>
+            <div class="service-cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Network Monitoring</h3>
+                    <p>Monitor your network's performance in real-time with our advanced tools. Detect anomalies, monitor traffic, and ensure optimal performance with ease.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>IP Stresser</h3>
+                    <p>Simulate various network stress scenarios to evaluate and strengthen your infrastructure. Our IP Stresser tool provides detailed analytics to help you understand your network's resilience under load.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security Analysis</h3>
+                    <p>Identify and mitigate potential security threats with our comprehensive security analysis services. Protect your network from vulnerabilities and ensure robust security measures are in place.</p>
+                </div>
+                <!-- Additional Services -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Performance Optimization</h3>
+                    <p>Optimize your network's performance by identifying bottlenecks and implementing effective solutions. Enhance speed, reliability, and efficiency across your entire network infrastructure.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Custom Solutions</h3>
+                    <p>We offer tailored network solutions to meet your specific needs. Whether you're looking to expand your network or integrate new technologies, our experts are here to help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IP Stresser Section -->
+    <section id="stresser" class="stresser-section">
+        <div class="container">
+            <h2>IP Stresser Panel</h2>
+            <p>Our IP Stresser tool is designed to simulate network stress tests, allowing you to evaluate the resilience and performance of your network infrastructure. Whether you're preparing for high-traffic events or testing your security measures, our tool provides comprehensive analytics and control.</p>
+            
+            <form class="stresser-form">
+                <div class="form-group">
+                    <label for="target-ip">Target IP Address:</label>
+                    <input type="text" id="target-ip" name="target-ip" placeholder="e.g., 192.168.1.1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="port">Port:</label>
+                    <input type="number" id="port" name="port" placeholder="e.g., 80" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Duration (seconds):</label>
+                    <input type="number" id="duration" name="duration" placeholder="e.g., 60" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn start-button">Start Attack</button>
+                    <button type="button" class="btn stop-button">Stop Attack</button>
+                </div>
+            </form>
+
+            <div class="status">
+                <h3>Status</h3>
+                <p>No active attacks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>We're here to help! Whether you have questions about our services, need support, or just want to give feedback, feel free to reach out to us.</p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" placeholder="e.g., John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" placeholder="e.g., johndoe@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn submit-button">Send Message</button>
+            </form>
+
+            <div class="contact-info">
+                <h3>Our Address</h3>
+                <p>123 Network Lane,<br>Tech City, TC 45678</p>
+
+                <h3>Phone</h3>
+                <p>+1 (234) 567-8901</p>
+
+                <h3>Email</h3>
+                <p><a href="mailto:support@networktoolspro.com">support@networktoolspro.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Want more website templates?</p>
+            <a href="https://github.com/Razberiwaffl?tab=repositories" class="promo-button" target="_blank" rel="noopener noreferrer">Click Here</a>
+            <p>&copy; 2024 NetworkTools Pro. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="main.js"></script>
+</body>
+</html>

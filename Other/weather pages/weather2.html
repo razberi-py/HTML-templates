@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Neon Weather Dashboard</title>
+  <style>
+    /* Reset and Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0a0a23, #121243);
+      overflow: hidden;
+    }
+
+    /* Weather Dashboard Container */
+    .weather-dashboard {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    /* Keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Current Weather Section */
+    .current-weather {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    /* Weather Condition and Icon */
+    .condition {
+      font-size: 1.8em;
+      color: #4cc9f0;
+      text-shadow: 0 0 8px #4cc9f0, 0 0 16px #4cc9f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .weather-icon {
+      font-size: 2.5em;
+    }
+
+    /* Temperature and Unit Toggle */
+    .temperature {
+      font-size: 3em;
+      color: #ff33cc;
+      text-shadow: 0 0 10px #ff33cc, 0 0 20px #ff33cc;
+      margin-bottom: 10px;
+    }
+    .toggle-unit {
+      color: #fff;
+      background: #ff33cc;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.3s;
+      box-shadow: 0 0 10px #ff33cc;
+    }
+    .toggle-unit:hover { background: #e1476f; }
+
+    /* Weather Details Section */
+    .details {
+      font-size: 1em;
+      color: #ddd;
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+      justify-content: space-around;
+      width: 100%;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .detail-item {
+      text-align: center;
+      transition: color 0.3s;
+    }
+    .detail-item:hover { color: #4cc9f0; }
+
+    /* Five-Day Forecast Section */
+    .forecast {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .forecast-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9em;
+      transition: color 0.3s;
+    }
+    .forecast-day:hover { color: #ff33cc; }
+    .forecast-icon {
+      font-size: 1.5em;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .search-bar button {
+      padding: 12px 20px;
+      background: #ff33cc;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .search-bar button:hover { background: #e1476f; }
+  </style>
+</head>
+<body>
+
+  <!-- Weather Dashboard -->
+  <div class="weather-dashboard">
+
+    <!-- Current Weather Section -->
+    <div class="current-weather">
+      <div class="condition" id="condition">
+        <span id="weather-icon" class="weather-icon">☀️</span>
+        <span>Sunny</span>
+      </div>
+      <div class="temperature" id="temperature">25°C</div>
+      <button class="toggle-unit" onclick="toggleUnit()">Toggle °C/°F</button>
+    </div>
+    
+    <!-- Weather Details -->
+    <div class="details">
+      <div class="detail-item">
+        <span>Humidity</span>
+        <strong id="humidity">60%</strong>
+      </div>
+      <div class="detail-item">
+        <span>Wind Speed</span>
+        <strong id="wind">10 km/h</strong>
+      </div>
+      <div class="detail-item">
+        <span>Description</span>
+        <strong id="description">Clear Sky</strong>
+      </div>
+    </div>
+
+    <!-- Five-Day Forecast Section -->
+    <div class="forecast">
+      <div class="forecast-day"><span>Mon</span><span class="forecast-icon">🌤️</span><span>26°C</span></div>
+      <div class="forecast-day"><span>Tue</span><span class="forecast-icon">🌧️</span><span>22°C</span></div>
+      <div class="forecast-day"><span>Wed</span><span class="forecast-icon">☀️</span><span>28°C</span></div>
+      <div class="forecast-day"><span>Thu</span><span class="forecast-icon">⛅</span><span>24°C</span></div>
+      <div class="forecast-day"><span>Fri</span><span class="forecast-icon">☁️</span><span>20°C</span></div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="city" placeholder="Enter city">
+      <button onclick="fetchWeather()">Search</button>
+    </div>
+  </div>
+
+  <script>
+    let isCelsius = true;
+
+    // Sample Weather Data (for demonstration)
+    const sampleWeatherData = {
+      "New York": {
+        condition: "Cloudy", icon: "☁️", temperature: 20, humidity: "70%", wind: "8 km/h", description: "Partly Cloudy",
+        forecast: [ {day: "Mon", icon: "☁️", temp: 18}, {day: "Tue", icon: "🌧️", temp: 16}, {day: "Wed", icon: "☀️", temp: 24}, {day: "Thu", icon: "🌤️", temp: 22}, {day: "Fri", icon: "⛅", temp: 19} ]
+      },
+      "Tokyo": {
+        condition: "Sunny", icon: "☀️", temperature: 30, humidity: "50%", wind: "5 km/h", description: "Clear Sky",
+        forecast: [ {day: "Mon", icon: "☀️", temp: 28}, {day: "Tue", icon: "☁️", temp: 26}, {day: "Wed", icon: "🌧️", temp: 25}, {day: "Thu", icon: "🌤️", temp: 27}, {day: "Fri", icon: "☀️", temp: 29} ]
+      }
+    };
+
+    function fetchWeather() {
+      const city = document.getElementById("city").value;
+      const weather = sampleWeatherData[city];
+      
+      if (weather) {
+        updateWeather(weather);
+      } else {
+        alert("City not found. Try 'New York' or 'Tokyo'.");
+      }
+    }
+
+    function updateWeather(weather) {
+      document.getElementById("condition").innerText = weather.condition;
+      document.getElementById("weather-icon").innerText = weather.icon;
+      document.getElementById("temperature").innerText = `${weather.temperature}°C`;
+      document.getElementById("humidity").innerText = weather.humidity;
+      document.getElementById("wind").innerText = weather.wind;
+      document.getElementById("description").innerText = weather.description;
+
+      const forecastHTML = weather.forecast.map(day => `
+        <div class="forecast-day">
+          <span>${day.day}</span> <span class="forecast-icon">${day.icon}</span> <span>${day.temp}°C</span>
+        </div>
+      `).join("");
+      document.querySelector(".forecast").innerHTML = forecastHTML;
+    }
+
+    function toggleUnit() {
+      const tempElem = document.getElementById("temperature");
+      const currentTemp = parseInt(tempElem.innerText);
+      const newTemp = isCelsius ? (currentTemp * 9/5) + 32 : (currentTemp - 32) * 5/9;
+      tempElem.innerText = `${Math.round(newTemp)}°${isCelsius ? 'F' : 'C'}`;
+      isCelsius = !isCelsius;
+    }
+  </script>
+
+</body>
+</html>

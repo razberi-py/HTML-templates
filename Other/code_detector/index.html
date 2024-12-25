@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Google Fonts for Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 class="neon-text">Data Analyzer</h1>
+
+    <!-- File Upload Section -->
+    <div class="upload-container">
+        <h2 class="neon-text">Upload Your Code Files or Folders</h2>
+        <input type="file" id="fileInput" webkitdirectory directory multiple accept=".html,.css,.js,.ts,.py,.java,.c,.cpp,.bat,.cmd,.txt">
+        <button id="analyzeButton">Analyze Files</button>
+
+        <!-- Drag-and-Drop Area -->
+        <div id="dropArea">
+            <p>Or drag and drop your files or folders here</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressContainer" style="display: none;">
+            <div id="progressBar"></div>
+            <p id="progressText">0%</p>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer" style="display: none;">
+        <h2 class="neon-text">Analysis Report</h2>
+
+        <!-- Summary -->
+        <div class="summary">
+            <p><strong>Total Files Scanned:</strong> <span id="totalFiles">0</span></p>
+            <p><strong>Total Folders Scanned:</strong> <span id="totalFolders">0</span></p>
+            <p><strong>Total Size of Files:</strong> <span id="totalSize">0</span></p>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container" id="pieChartContainer">
+                <h3 class="neon-text">File Type Distribution (Pie Chart)</h3>
+                <div id="pieChart"></div>
+                <div id="pieLegend" class="legend-container"></div>
+            </div>
+
+            <div class="chart-container" id="barChartContainer">
+                <h3 class="neon-text">File Type Distribution (Bar Graph)</h3>
+                <div id="barChart"></div>
+                <div id="barLegend" class="legend-container"></div>
+            </div>
+        </div>
+
+        <!-- Code Complexity Report -->
+        <div class="complexity-report">
+            <h3 class="neon-text">Code Complexity Report</h3>
+            <div id="complexityReport"></div>
+            <button id="showMoreButton" style="display: none;">Show More</button>
+        </div>
+
+        <!-- Export Report Buttons -->
+        <div class="export-section">
+            <button id="exportPdfButton">Export Report as PDF</button>
+            <button id="exportMdButton">Export Report as Markdown</button>
+        </div>
+
+        <!-- Folder Size Information -->
+        <div class="folder-size">
+            <h3 class="neon-text">Folder Size Information</h3>
+            <p><strong>Total Size of Folders:</strong> <span id="totalFolderSize">0</span></p>
+        </div>
+
+        <!-- ASCII Folder Structure -->
+        <div class="folder-structure">
+            <h3 class="neon-text">Folder Structure</h3>
+            <pre id="folderStructure"></pre>
+        </div>
+
+        <!-- Markdown Viewer -->
+        <div class="markdown-viewer" id="markdownViewer" style="display: none;">
+            <h3 class="neon-text">Markdown Report Preview</h3>
+            <div id="markdownContent"></div>
+            <button id="closeMarkdownButton">Close Preview</button>
+        </div>
+    </div>
+
+    <!-- Include Esprima and Estraverse libraries for JavaScript parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/esprima/4.0.1/esprima.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/estraverse/5.2.0/estraverse.min.js"></script>
+    <!-- Include jsPDF library for exporting PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- Include Showdown library for Markdown conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

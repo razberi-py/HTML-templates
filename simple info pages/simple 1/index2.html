@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Display Template</title>
+  <style>
+    /* Reset and Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Arial', sans-serif; color: #f5f5f5; background: #121212; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { margin-bottom: 10px; }
+
+    /* Navigation Bar */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(18, 18, 18, 0.9);
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #d1d1d1;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #ff6584; }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #0a0a0a, #333399);
+      color: #ff6584;
+      text-align: center;
+      perspective: 1000px;
+    }
+    #hero h1 {
+      font-size: 3em;
+      animation: textFocusIn 1.5s ease;
+    }
+    #hero p {
+      max-width: 700px;
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+    #hero .cta {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: #ff6584;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+      animation: bounceIn 1.5s ease infinite alternate;
+    }
+    #hero .cta:hover { transform: scale(1.1); }
+
+    /* Keyframes for Animations */
+    @keyframes textFocusIn {
+      0% { letter-spacing: 1em; opacity: 0; }
+      100% { letter-spacing: normal; opacity: 1; }
+    }
+    @keyframes bounceIn {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+
+    /* Features Section */
+    #features {
+      padding: 80px 20px;
+      background: #1c1c3a;
+      text-align: center;
+    }
+    #features h2 { color: #ff6584; }
+    .feature-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .feature-item {
+      width: 250px;
+      padding: 20px;
+      background: #292950;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    }
+    .feature-item h3 { color: #f5f5f5; }
+    .feature-item p { color: #d1d1d1; }
+
+    /* Testimonials Carousel */
+    #testimonials {
+      padding: 80px 20px;
+      background: #121212;
+      text-align: center;
+    }
+    .carousel-container {
+      width: 80%;
+      max-width: 600px;
+      overflow: hidden;
+      position: relative;
+      margin: auto;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-item {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 20px;
+      color: #f5f5f5;
+      background: #292950;
+      border-radius: 10px;
+    }
+    .carousel-item h3 { color: #ff6584; }
+
+    /* Contact Section */
+    #contact {
+      padding: 80px 20px;
+      background: linear-gradient(to right, #333399, #121212);
+      text-align: center;
+    }
+    #contact h2 { color: #ff6584; }
+    .contact-form {
+      max-width: 600px;
+      margin: auto;
+      background: #1c1c3a;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background: #292950;
+      border: none;
+      color: #f5f5f5;
+      border-radius: 5px;
+    }
+    .contact-form button {
+      padding: 12px 30px;
+      background: #ff6584;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .contact-form button:hover { background: #e1476f; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#features">Features</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <h1>Explore Advanced Design</h1>
+    <p>We create cutting-edge, user-focused websites with dynamic designs that leave lasting impressions.</p>
+    <button class="cta">Get Started</button>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <h2>Our Features</h2>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <h3>Responsive Design</h3>
+        <p>Seamlessly adaptable layouts for every screen size.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Modern Aesthetics</h3>
+        <p>Visually appealing designs that resonate with users.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Advanced Animations</h3>
+        <p>Engaging animations to capture attention.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Fast Performance</h3>
+        <p>Optimized for fast loading and smooth transitions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-item">
+          <h3>Amazing Experience!</h3>
+          <p>"Working with this team was a dream come true. Our website is both beautiful and functional."</p>
+        </div>
+        <div class="carousel-item">
+          <h3>Highly Recommended</h3>
+          <p>"They delivered beyond our expectations with top-notch design and responsiveness."</p>
+        </div>
+        <div class="carousel-item">
+          <h3>Exceptional Quality</h3>
+          <p>"The level of detail and commitment is unmatched. Our site stands out thanks to them."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <button>Send Message</button>
+    </div>
+  </section>
+
+  <!-- Carousel Functionality -->
+  <script>
+    const track = document.querySelector('.carousel-track');
+    let index = 0;
+
+    setInterval(() => {
+      index = (index + 1) % 3;
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }, 3000);
+  </script>
+</body>
+</html>
