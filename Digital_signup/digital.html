@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Sign-Up</title>
+  <style>
+    /* Basic resets */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Background and font */
+    body {
+      background-color: #1b1b2f;
+      font-family: Arial, sans-serif;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Container styling */
+    .signup-container {
+      background: rgba(10, 10, 20, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      width: 320px;
+      text-align: center;
+    }
+
+    /* Title and description */
+    .signup-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #0ff;
+      margin-bottom: 0.5em;
+      text-shadow: 0px 0px 6px #0ff;
+    }
+
+    .signup-description {
+      font-size: 0.9em;
+      color: #999;
+      margin-bottom: 1.5em;
+    }
+
+    /* Input fields */
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a44;
+      color: #f0f0f0;
+      font-size: 1em;
+    }
+
+    /* Sign-up button */
+    .signup-button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #0ff;
+      background: linear-gradient(45deg, #0ff, #08f);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0px 0px 10px #0ff;
+    }
+
+    .signup-button:hover {
+      background: linear-gradient(45deg, #08f, #0ff);
+      box-shadow: 0px 0px 15px #0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h1 class="signup-title">Join the Network</h1>
+    <p class="signup-description">Dive into the digital realm. Connect now.</p>
+
+    <input type="text" class="input-field" placeholder="Username" required>
+    <input type="email" class="input-field" placeholder="Email" required>
+    <input type="password" class="input-field" placeholder="Password" required>
+
+    <button class="signup-button">Sign Up</button>
+  </div>
+</body>
+</html>
