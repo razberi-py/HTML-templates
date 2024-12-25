@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup</title>
+  <style>
+    /* Basic resets */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Background and font */
+    body {
+      background-color: #fff3e0;
+      font-family: 'Arial', sans-serif;
+      color: #4d2c18;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('path/to/fall-leaves-pattern.png');
+      background-size: cover;
+      background-blend-mode: overlay;
+    }
+
+    /* Container styling */
+    .container {
+      background: rgba(255, 235, 204, 0.95);
+      padding: 2.5em;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      width: 360px;
+      text-align: center;
+    }
+
+    /* Logo */
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #d95f28;
+      margin-bottom: 1.5em;
+      text-shadow: 0px 0px 10px rgba(217, 95, 40, 0.5);
+    }
+
+    /* Title */
+    .form-title {
+      font-size: 1.4em;
+      color: #804020;
+      margin-bottom: 1em;
+    }
+
+    /* Input fields */
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1em;
+      border: 1px solid #d9a06a;
+      border-radius: 8px;
+      font-size: 1em;
+      background-color: #ffe6cc;
+      color: #4d2c18;
+    }
+
+    /* Toggle and buttons */
+    .toggle-button {
+      margin: 1em 0;
+      color: #d95f28;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(45deg, #d95f28, #ff944d);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1em;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, #ff944d, #d95f28);
+    }
+
+    /* JavaScript-based display */
+    .form-section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">Autumn Zone</div>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="form-section active">
+      <h2 class="form-title">Login</h2>
+      <input type="text" class="input-field" placeholder="Username" required>
+      <input type="password" class="input-field" placeholder="Password" required>
+      <button class="button">Log In</button>
+      <div class="toggle-button" onclick="toggleForms()">Don't have an account? Sign Up</div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signupForm" class="form-section">
+      <h2 class="form-title">Sign Up</h2>
+      <input type="text" class="input-field" placeholder="Username" required>
+      <input type="email" class="input-field" placeholder="Email" required>
+      <input type="password" class="input-field" placeholder="Password" required>
+      <button class="button">Sign Up</button>
+      <div class="toggle-button" onclick="toggleForms()">Already have an account? Log In</div>
+    </div>
+  </div>
+
+  <script>
+    function toggleForms() {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      loginForm.classList.toggle('active');
+      signupForm.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
