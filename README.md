@@ -31,11 +31,15 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 - 🎨 Added Minimalistic Flat Modern Template.
 - 🚀 Released first build with core functionalities.
 
-### v1.1.0 - Feature Expansion
+### v1.1.0 - Feature Expansion 12/25/24
 - 🛠️ Added Login pages
 - ⚡ Added sign up pages
 - 🛠️ Lots of templates
 - 🛠️ formatted the documents so looks better
+
+### v1.2.0 - Feature Expansion 12/27/24
+- 🛠️ Added Portfolio pages 
+- 🛠️ Added Sum more login and signup pages
 
 ---
 
