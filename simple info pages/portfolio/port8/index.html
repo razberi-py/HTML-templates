@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Panel Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #1e293b, #374151);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Card Container */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #2575fc, #6a11cb);
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Portfolio</h1>
+    <div class="card-container">
+        <div class="card" onclick="openModal('about')">
+            <h2>About Me</h2>
+            <p>Learn more about who I am and my journey.</p>
+        </div>
+        <div class="card" onclick="openModal('skills')">
+            <h2>Skills</h2>
+            <p>Explore my expertise in various technologies.</p>
+        </div>
+        <div class="card" onclick="openModal('projects')">
+            <h2>Projects</h2>
+            <p>Check out some of my best work.</p>
+        </div>
+        <div class="card" onclick="openModal('contact')">
+            <h2>Contact</h2>
+            <p>Get in touch with me.</p>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('about')">&times;</button>
+            <h2>About Me</h2>
+            <p>
+                I am a passionate developer with experience in web design, backend systems, and user experience.
+                I love solving problems and crafting seamless digital solutions.
+            </p>
+        </div>
+    </div>
+
+    <!-- Skills Modal -->
+    <div id="skills-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('skills')">&times;</button>
+            <h2>My Skills</h2>
+            <p>Here are some of the technologies I'm proficient in:</p>
+            <ul>
+                <li>HTML, CSS, and JavaScript</li>
+                <li>React and Vue.js</li>
+                <li>Node.js and Python</li>
+                <li>RESTful APIs and Databases</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Projects Modal -->
+    <div id="projects-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('projects')">&times;</button>
+            <h2>My Projects</h2>
+            <p>Explore some of the exciting projects I’ve worked on:</p>
+            <ul>
+                <li><strong>Project 1:</strong> A responsive e-commerce platform.</li>
+                <li><strong>Project 2:</strong> A real-time chat application.</li>
+                <li><strong>Project 3:</strong> A personal finance tracker.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contact')">&times;</button>
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out via:</p>
+            <ul>
+                <li>Email: yourname@example.com</li>
+                <li>GitHub: <a href="https://github.com/razberi-py" target="_blank" style="color: #6a11cb;">razberi-py</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function openModal(section) {
+            document.getElementById(`${section}-modal`).style.display = 'flex';
+        }
+
+        function closeModal(section) {
+            document.getElementById(`${section}-modal`).style.display = 'none';
+        }
+    </script>
+</body>
+</html>

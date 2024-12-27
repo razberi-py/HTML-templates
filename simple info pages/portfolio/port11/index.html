@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #141e30, #243b55);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00c6ff;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        /* Cards Section */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00c6ff;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #d1d5db;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        .modal h2 {
+            color: #00c6ff;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            margin-bottom: 2rem;
+        }
+
+        .modal button {
+            padding: 0.75rem 1.5rem;
+            background: #00c6ff;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal button:hover {
+            background: #0072ff;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <h1>Welcome to My Portfolio</h1>
+        <p>
+            Explore my skills, projects, and achievements in a modern and interactive way.
+        </p>
+
+        <!-- Cards Section -->
+        <div class="cards">
+            <div class="card" onclick="openModal('about')">
+                <h2>About Me</h2>
+                <p>Learn more about my journey and background.</p>
+            </div>
+            <div class="card" onclick="openModal('skills')">
+                <h2>Skills</h2>
+                <p>Discover my technical expertise and tools I work with.</p>
+            </div>
+            <div class="card" onclick="openModal('projects')">
+                <h2>Projects</h2>
+                <p>See the amazing projects I've worked on.</p>
+            </div>
+            <div class="card" onclick="openModal('contact')">
+                <h2>Contact</h2>
+                <p>Get in touch with me for collaborations or inquiries.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+    <div class="modal" id="modal-about">
+        <h2>About Me</h2>
+        <p>
+            I am a passionate developer with a focus on creating seamless user experiences and efficient backend systems.
+        </p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <div class="modal" id="modal-skills">
+        <h2>Skills</h2>
+        <p>
+            My expertise includes HTML, CSS, JavaScript, Python, and frameworks like React and Node.js.
+        </p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <div class="modal" id="modal-projects">
+        <h2>Projects</h2>
+        <p>
+            Check out my projects, including a modern e-commerce app, a real-time chat application, and a personal portfolio generator.
+        </p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <div class="modal" id="modal-contact">
+        <h2>Contact</h2>
+        <p>
+            Feel free to reach out via email at yourname@example.com or connect with me on LinkedIn.
+        </p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        function openModal(section) {
+            document.getElementById('modal-' + section).style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

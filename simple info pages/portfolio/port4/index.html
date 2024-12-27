@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio with Rating</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #1c92d2, #f2fcfe);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .left, .right {
+            width: 50%;
+            height: 100vh;
+        }
+
+        /* Left Panel */
+        .left {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Right Panel */
+        .right {
+            background: #f4f4f9;
+            overflow-y: auto;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Project Cards */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contact Buttons */
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            background: #6a11cb;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-buttons a:hover {
+            background: #2575fc;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .modal label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            text-align: left;
+        }
+
+        .modal input, .modal textarea, .modal select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal button {
+            padding: 0.75rem 1.5rem;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background: #2575fc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Panel -->
+    <div class="left">
+        <h1>Your Name</h1>
+        <p>Welcome to my portfolio! Explore my projects and contact me below.</p>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+        <!-- Projects Section -->
+        <div id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" onclick="showProjectDetails('Project 1', 'Description of Project 1')">
+                    <h3>Project 1</h3>
+                </div>
+                <div class="project-card" onclick="showProjectDetails('Project 2', 'Description of Project 2')">
+                    <h3>Project 2</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="section">
+            <h2>Contact</h2>
+            <div class="contact-buttons">
+                <a href="#" onclick="showDiscordForm()">Discord</a>
+                <a href="https://github.com/" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discord Contact Modal -->
+    <div id="discordModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('discordModal')">&times;</button>
+            <h3>Contact via Discord</h3>
+            <form id="discordForm">
+                <label for="username">Your Discord Username</label>
+                <input type="text" id="username" name="username" placeholder="e.g., user#1234" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Type your message..." required></textarea>
+
+                <label for="rating">Rate this Portfolio (1-10)</label>
+                <input type="number" id="rating" name="rating" min="1" max="10" required>
+
+                <label for="color">Choose a Color</label>
+                <input type="color" id="color" name="color" value="#6a11cb">
+
+                <button type="button" onclick="sendDiscordMessage()">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show Modal
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Close Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Show Discord Form
+        function showDiscordForm() {
+            showModal('discordModal');
+        }
+
+        // Send Discord Message
+        function sendDiscordMessage() {
+            const username = document.getElementById('username').value;
+            const message = document.getElementById('message').value;
+            const rating = document.getElementById('rating').value;
+            const color = document.getElementById('color').value;
+
+            const webhookURL = 'https://discordapp.com/api/webhooks/1322187529373483018/v2AKeQ02p5ZNQaPVLyjCpEKWx6tAe404w-pzuJ0ryLsDOULcw9crRBbQCBr9SH1OGezA'; // Replace with your webhook URL
+
+            const payload = {
+                embeds: [{
+                    title: `New Message from ${username}`,
+                    description: message,
+                    fields: [
+                        { name: "Rating", value: `${rating}/10`, inline: true }
+                    ],
+                    color: parseInt(color.replace('#', ''), 16)
+                }]
+            };
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            }).then(() => {
+                alert('Message sent successfully!');
+                closeModal('discordModal');
+            }).catch(() => {
+                alert('Failed to send message.');
+            });
+        }
+    </script>
+</body>
+</html>

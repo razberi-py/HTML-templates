@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #1c92d2, #f2fcfe);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Split Panels */
+        .left, .right {
+            width: 50%;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Left Panel */
+        .left {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            background: url('https://via.placeholder.com/150') no-repeat center center/cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .left h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .left p {
+            font-size: 1.2rem;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .nav-buttons a:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #333;
+            transform: translateY(-3px);
+        }
+
+        /* Right Panel */
+        .right {
+            background: #f4f4f9;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill {
+            background: #e8e8f9;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-bar {
+            background: #6a11cb;
+            height: 10px;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .skill-level {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Contact Buttons */
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            background: #6a11cb;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-buttons a:hover {
+            background: #2575fc;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Panel -->
+    <div class="left">
+        <div class="profile-pic"></div>
+        <h1>Your Name</h1>
+        <p>
+            Hello! I'm a developer passionate about creating innovative solutions and crafting engaging web experiences. 
+        </p>
+        <div class="nav-buttons">
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right">
+        <!-- Projects Section -->
+        <div id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" onclick="showProjectDetails('Project 1', 'An advanced web application.', 'https://example.com', 'https://via.placeholder.com/300')">
+                    <h3>Project 1</h3>
+                </div>
+                <div class="project-card" onclick="showProjectDetails('Project 2', 'A powerful Python-based API.', 'https://example.com', 'https://via.placeholder.com/300')">
+                    <h3>Project 2</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div id="skills" class="section">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill" onclick="showSkillDetails('HTML', 90, 'Proficient in creating structured, semantic HTML.')">
+                    HTML
+                </div>
+                <div class="skill" onclick="showSkillDetails('CSS', 80, 'Skilled in designing responsive, modern layouts.')">
+                    CSS
+                </div>
+                <div class="skill" onclick="showSkillDetails('JavaScript', 70, 'Experienced in writing dynamic, interactive scripts.')">
+                    JavaScript
+                </div>
+                <div class="skill" onclick="showSkillDetails('Python', 85, 'Advanced skills in scripting and backend development.')">
+                    Python
+                </div>
+                <div class="skill" onclick="showSkillDetails('JSON', 75, 'Proficient in handling and parsing JSON data.')">
+                    JSON
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="section">
+            <h2>Contact</h2>
+            <p>Feel free to reach out via Discord or explore my GitHub profile!</p>
+            <div class="contact-buttons">
+                <a href="#" onclick="showDiscordForm()">Discord</a>
+                <a href="https://github.com/" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 id="modal-title"></h3>
+            <img id="modal-image" src="" alt="" style="max-width: 100%; border-radius: 10px; margin: 1rem 0; display: none;">
+            <p id="modal-description"></p>
+            <a id="modal-link" href="#" target="_blank" style="text-decoration: none; color: #2575fc; font-weight: bold; display: none;">View Project</a>
+            <div id="skill-progress" style="display: none;">
+                <div class="skill-bar" id="skill-bar"></div>
+                <p class="skill-level" id="skill-level"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(title, description, link, image) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            if (image) {
+                document.getElementById('modal-image').src = image;
+                document.getElementById('modal-image').style.display = 'block';
+            }
+            if (link) {
+                const modalLink = document.getElementById('modal-link');
+                modalLink.href = link;
+                modalLink.style.display = 'inline-block';
+            }
+            document.getElementById('skill-progress').style.display = 'none';
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function showSkillDetails(title, level, description) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('modal-image').style.display = 'none';
+            document.getElementById('modal-link').style.display = 'none';
+            document.getElementById('skill-bar').style.width = level + '%';
+            document.getElementById('skill-bar').style.background = level >= 80 ? '#6a11cb' : '#ffa500';
+            document.getElementById('skill-level').textContent = `Proficiency Level: ${level}%`;
+            document.getElementById('skill-progress').style.display = 'block';
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function showDiscordForm() {
+            alert('Discord form coming soon!');
+        }
+    </script>
+</body>
+</html>

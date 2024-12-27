@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Portfolio</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        nav ul li a:hover {
+            background: #ffdd59;
+            color: #333;
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #fc466b, #3f5efb);
+            color: white;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .hero img {
+            max-width: 150px;
+            border-radius: 50%;
+            margin: 1rem 0;
+            border: 5px solid white;
+            transition: transform 0.3s ease;
+        }
+
+        .hero img:hover {
+            transform: scale(1.1);
+        }
+
+        .hero h1 {
+            margin: 0.5rem 0;
+            font-size: 3rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero .cta-buttons {
+            margin-top: 1.5rem;
+        }
+
+        .hero .cta-buttons a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+            background: #2575fc;
+            color: white;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .hero .cta-buttons a:hover {
+            background: #ffdd59;
+            color: #333;
+            transform: translateY(-3px);
+        }
+
+        /* Projects Section */
+        section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: #2575fc;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project {
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project img {
+            max-width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .project img:hover {
+            transform: scale(1.05);
+        }
+
+        .project h3 {
+            margin: 1rem 0;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            color: black;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h3 {
+            margin: 1rem 0;
+        }
+
+        .modal-content a {
+            display: inline-block;
+            margin: 0.5rem 0;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            color: white;
+            background: #2575fc;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .modal-content a:hover {
+            background: #ffdd59;
+            color: #333;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+            background: #f4f4f9;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+        }
+
+        /* About Me Section */
+        #about-me {
+            background: #f4f4f9;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+        }
+
+        #about-me p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Enhanced Portfolio</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about" class="hero">
+        <img src="https://via.placeholder.com/150" alt="Your Photo">
+        <h1>Your Name</h1>
+        <p>Welcome to my enhanced portfolio! Explore my work and learn more about me below.</p>
+        <div class="cta-buttons">
+            <a href="#projects">View Projects</a>
+            <a href="#contact">Get In Touch</a>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects">
+            <div class="project" onclick="showModal(1)">
+                <img src="https://via.placeholder.com/300" alt="Project 1">
+                <h3>Project 1</h3>
+            </div>
+            <div class="project" onclick="showModal(2)">
+                <img src="https://via.placeholder.com/300" alt="Project 2">
+                <h3>Project 2</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-me">
+        <h2>About Me</h2>
+        <p>I'm a passionate developer skilled in modern web design and development. I specialize in creating interactive, user-friendly interfaces with attention to detail and aesthetics.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Feel free to reach out if you'd like to collaborate or discuss a project!</p>
+        <p>Email: <a href="mailto:yourname@example.com">yourname@example.com</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your Name. All rights reserved.</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal(1)">×</button>
+            <img src="https://via.placeholder.com/300" alt="Project 1">
+            <h3>Project 1</h3>
+            <p>This is an amazing project that showcases modern design and functionality.</p>
+            <a href="#">View Project</a>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal(2)">×</button>
+            <img src="https://via.placeholder.com/300" alt="Project 2">
+            <h3>Project 2</h3>
+            <p>This project focuses on dynamic features and responsive design.</p>
+            <a href="#">View Project</a>
+        </div>
+    </div>
+
+    <script>
+        function showModal(id) {
+            document.getElementById(`modal${id}`).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(`modal${id}`).style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #1e293b, #374151);
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            color: #00c6ff;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        button {
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 1.2rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #2575fc, #6a11cb);
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: #00c6ff;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .skill {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 1rem;
+            color: white;
+        }
+
+        .skill h3 {
+            margin-bottom: 0.5rem;
+            color: #00c6ff;
+        }
+
+        .skill-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            width: 0;
+        }
+
+        /* Projects Section */
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            align-self: center;
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 1rem;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background: linear-gradient(145deg, #2575fc, #6a11cb);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Explore my skills, projects, and contact me!</p>
+        <div class="button-container">
+            <button onclick="openModal('about')">About Me</button>
+            <button onclick="openModal('skills')">Skills</button>
+            <button onclick="openModal('projects')">Projects</button>
+            <button onclick="openModal('contact')">Contact</button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('about')">&times;</button>
+            <h2>About Me</h2>
+            <p>I am a passionate developer specializing in web and software development.</p>
+        </div>
+    </div>
+
+    <div id="skills-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('skills')">&times;</button>
+            <h2>My Skills</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <h3>HTML</h3>
+                    <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                </div>
+                <div class="skill">
+                    <h3>CSS</h3>
+                    <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                </div>
+                <div class="skill">
+                    <h3>Python</h3>
+                    <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                </div>
+                <div class="skill">
+                    <h3>JavaScript</h3>
+                    <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="projects-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('projects')">&times;</button>
+            <h2>My Projects</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h3>Project 1</h3>
+                    <p>A modern web application</p>
+                </div>
+                <div class="project-card">
+                    <h3>Project 2</h3>
+                    <p>A real-time chat system</p>
+                </div>
+                <div class="project-card">
+                    <h3>Project 3</h3>
+                    <p>A personal finance tracker</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contact')">&times;</button>
+            <h2>Contact Me</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(section) {
+            document.getElementById(`${section}-modal`).style.display = 'flex';
+
+            if (section === 'skills') {
+                randomizeSkillBars();
+            }
+        }
+
+        function closeModal(section) {
+            document.getElementById(`${section}-modal`).style.display = 'none';
+        }
+
+        function randomizeSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar-fill');
+            skillBars.forEach(bar => {
+                const randomPercentage = Math.floor(Math.random() * 101);
+                bar.style.width = randomPercentage + '%';
+            });
+        }
+    </script>
+</body>
+</html>

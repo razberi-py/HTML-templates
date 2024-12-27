@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Portfolio</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        /* Card-Based Layout */
+        .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            margin: 1rem 0;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-buttons a:hover {
+            background: linear-gradient(145deg, #2575fc, #6a11cb);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Futuristic Portfolio</h1>
+        <p>Experience a dynamic and bold way to showcase skills and projects.</p>
+    </header>
+
+    <!-- Skills Section -->
+    <div class="card">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill">
+                <h3>HTML</h3>
+                <div class="skill-bar">
+                    <div class="skill-bar-fill" style="width: 66%;"></div>
+                </div>
+            </div>
+            <div class="skill">
+                <h3>CSS</h3>
+                <div class="skill-bar">
+                    <div class="skill-bar-fill" style="width: 36%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="card">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" onclick="showModal('Project 1', 'An innovative web solution.')">
+                <h3>Project 1</h3>
+                <img src="https://via.placeholder.com/300" alt="Project 1">
+                <p>Click to view details</p>
+            </div>
+            <div class="project-card" onclick="showModal('Project 2', 'A robust API service.')">
+                <h3>Project 2</h3>
+                <img src="https://via.placeholder.com/300" alt="Project 2">
+                <p>Click to view details</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="card">
+        <h2>Contact</h2>
+        <div class="contact-container">
+            <p>Feel free to reach out via the links below!</p>
+            <div class="contact-buttons">
+                <a href="mailto:yourname@example.com">Email</a>
+                <a href="https://github.com/razberi-py/HTML-templates" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+
+    <script>
+        function showModal(title, description) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
