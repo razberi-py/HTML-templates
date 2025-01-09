@@ -45,7 +45,7 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 - 🛠️ Added in depth pages
 - 🛠️ Added rect and vue
 - 🛠️ Learned TS and TSX
-- 🛠️ added 15+ advanced pages
+- 🛠️ added 20+ advanced pages
 
 ---
 
