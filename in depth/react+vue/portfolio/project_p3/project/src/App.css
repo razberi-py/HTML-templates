@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Properties */
+:root {
+  --spacing-unit: 8px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.14);
+  --transition-fast: 200ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* Base Styles */
+body {
+  @apply antialiased bg-[#0a0a0a] text-white;
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+}
+
+/* Typography Scale */
+h1 { @apply text-4xl font-bold leading-tight; }
+h2 { @apply text-3xl font-bold leading-tight; }
+h3 { @apply text-2xl font-bold leading-snug; }
+h4 { @apply text-xl font-semibold leading-snug; }
+h5 { @apply text-lg font-semibold leading-normal; }
+h6 { @apply text-base font-semibold leading-normal; }
+
+/* Component Base Styles */
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90;
+}
+
+.card {
+  @apply bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-300;
+}
+
+.input {
+  @apply bg-gray-700 rounded-lg px-4 py-2 border border-gray-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300;
+}
+
+/* Animation Utilities */
+.animate-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Utilities */
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+}
+
+/* Focus States */
+:focus-visible {
+  @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-[#0a0a0a];
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full hover:bg-gray-500 transition-colors;
+}
