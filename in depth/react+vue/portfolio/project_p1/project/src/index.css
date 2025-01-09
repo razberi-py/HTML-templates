@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#1A1A1A] text-white cursor-none;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#B829F7] via-[#29B6F7] to-[#FF6B6B] bg-clip-text text-transparent;
+  }
+  
+  .nav-link {
+    @apply relative px-4 py-2 transition-all duration-300 hover:text-[#29B6F7];
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#B829F7] to-[#29B6F7] transition-all duration-300;
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+  
+  .custom-cursor {
+    @apply fixed w-8 h-8 rounded-full pointer-events-none mix-blend-difference z-50;
+    background: white;
+    transition: transform 0.2s ease;
+  }
+  
+  .custom-cursor-trailer {
+    @apply fixed w-16 h-16 rounded-full pointer-events-none mix-blend-difference z-40;
+    background: rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s ease;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#1A1A1A];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-[#B829F7] to-[#29B6F7] rounded-full;
+}
