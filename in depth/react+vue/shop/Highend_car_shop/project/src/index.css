@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-900;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply relative px-3 py-2 text-sm font-medium transition-colors;
+  }
+  
+  .nav-link::after {
+    @apply content-[''] absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300;
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+  
+  .card {
+    @apply bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 border border-slate-700/50 hover:border-blue-500/50 overflow-hidden;
+  }
+}
