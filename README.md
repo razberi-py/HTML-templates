@@ -41,10 +41,11 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 - 🛠️ Added Portfolio pages 
 - 🛠️ Added Sum more login and signup pages
 
-### v1.2.0 - Detail Expansion 1/8/25
+### v1.3.0 - Detail Expansion 1/8/25
 - 🛠️ Added in depth pages
 - 🛠️ Added rect and vue
-- 🛠️ Learned TS and TSX 
+- 🛠️ Learned TS and TSX
+- 🛠️ added 15+ advanced pages
 
 ---
 
