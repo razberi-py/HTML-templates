@@ -62,7 +62,7 @@ This is updated as of 12/25/24 8:00AM
 - [ 🛠️ ] Dynamic Login/Sign-Up Pages  
 - [ ❌ ] Multi-Theme Support  
 - [ 🛠️ ] Animated Loading Screen  
-- [ 🛠️ ] 40+ / 150 templates goal
+- [ 🛠️ ] 60+ / 150 templates goal
 - [ ✅ ] Basic Templates
 - [ 🛠️ ] Support Server (Discord)
 - [ ❌ ] Website
