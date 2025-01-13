@@ -59,29 +59,16 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 
 This is updated as of 12/25/24 8:00AM
 
-- [ 🛠️ ] Dynamic Login/Sign-Up Pages  
+- [ ✅ ] Dynamic Login/Sign-Up Pages  
 - [ ❌ ] Multi-Theme Support  
 - [ 🛠️ ] Animated Loading Screen  
 - [ 🛠️ ] 60+ / 150 templates goal
 - [ ✅ ] Basic Templates
-- [ 🛠️ ] Support Server (Discord)
 - [ ❌ ] Website
 - More Coming soon
 
 ---
 
-# 👋 About Me
-
-╔════════════════════════════════════╗
-
-║       🌟 Who Am I? 🌟              
-
-╚════════════════════════════════════╝
-
-Hello! I'm a **beginner front-end developer** exploring the exciting world of web development.  
-I've been learning for **3 months**, and I’m passionate about experimenting with new ideas and honing my skills.
-
----
 
 ## 💡 Projects
 
@@ -110,7 +97,7 @@ I've been learning for **3 months**, and I’m passionate about experimenting wi
 ✅ Experimenting with **layout designs**.  
 🛠️ Practicing **responsive design** for mobile-first projects.  
 🛠️ Exploring **animations and interactivity**.  
-❌ Not yet working on back-end integration or advanced frameworks.  
+🛠️ Working on back-end integration or advanced frameworks.  
 
 
 
