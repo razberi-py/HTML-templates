@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dark Event Portal</title>
+  <style>
+    /* Color Variables */
+    :root {
+      --primary-red: #b30000;
+      --primary-black: #000;
+      --secondary-gray: #333;
+      --accent-gray: #555;
+      --bg-dark: #1c1c1c;
+    }
+
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--primary-black);
+      color: #fff;
+    }
+
+    /* Keyframes for Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes rotateIn {
+      from { opacity: 0; transform: rotate(-10deg); }
+      to { opacity: 1; transform: rotate(0deg); }
+    }
+    @keyframes borderAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(90deg, var(--primary-red), var(--primary-black));
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1s ease-out;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    .header p {
+      margin: 5px 0 0;
+      font-size: 1.2em;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .nav button,
+    .back-button {
+      position: relative;
+      z-index: 1;
+      border: 2px solid transparent;
+      background: none;
+      padding: 10px 20px;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 16px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .nav button::before,
+    .back-button::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff0000, #ff4d4d, #ff0000);
+      background-size: 200% 200%;
+      z-index: -1;
+      border-radius: 7px;
+      animation: borderAnimation 3s linear infinite;
+    }
+    .nav button:hover,
+    .back-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Content Container */
+    .content {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      /* Border removed so each section’s own style shines */
+    }
+
+    /* Base Section Styles */
+    .section {
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      animation: fadeIn 0.7s ease-out;
+    }
+    .hidden {
+      display: none;
+    }
+
+    /* Event Listing Section */
+    #eventListing {
+      background: #1c1c1c;
+      border: 1px solid var(--primary-red);
+    }
+    #eventListing h2 {
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    #eventListing ul {
+      list-style: none;
+      padding: 0;
+    }
+    #eventListing li {
+      padding: 10px;
+      border-bottom: 1px solid var(--accent-gray);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    #eventListing li:hover {
+      background: var(--accent-gray);
+      transform: translateX(10px);
+    }
+
+    /* Event Details Section */
+    #eventDetails {
+      background: linear-gradient(135deg, #111, #333);
+      border: 1px solid var(--accent-gray);
+      animation: slideIn 0.7s ease-out;
+    }
+    #eventDetails h2 {
+      color: var(--primary-red);
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    #eventDetails p {
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    /* Speakers Section */
+    #speakers {
+      background: linear-gradient(135deg, #000, #222);
+      border: 1px solid var(--accent-gray);
+      animation: rotateIn 0.7s ease-out;
+    }
+    #speakers h2 {
+      color: var(--primary-red);
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    #speakers ul {
+      list-style: none;
+      padding: 0;
+    }
+    #speakers li {
+      padding: 10px;
+      border-bottom: 1px solid var(--accent-gray);
+      transition: background 0.3s;
+    }
+    #speakers li:hover {
+      background: var(--accent-gray);
+    }
