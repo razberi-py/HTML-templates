@@ -284,3 +284,61 @@
       </ul>
     </div>
   </div>
+  <script>
+    // Hide all sections
+    function hideAllSections() {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.add('hidden');
+      });
+    }
+    // Show a specific section by its ID
+    function showSection(id) {
+      hideAllSections();
+      document.getElementById(id).classList.remove('hidden');
+    }
+    // Navigation button event listeners
+    document.getElementById('btnListing').addEventListener('click', () => showSection('eventListing'));
+    document.getElementById('btnDetails').addEventListener('click', () => showSection('eventDetails'));
+    document.getElementById('btnSpeakers').addEventListener('click', () => showSection('speakers'));
+    document.getElementById('btnVenue').addEventListener('click', () => showSection('venue'));
+    document.getElementById('btnFAQ').addEventListener('click', () => showSection('faq'));
+
+    // Populate Event Details when an event is clicked
+    document.querySelectorAll('#eventListing li').forEach(item => {
+      item.addEventListener('click', () => {
+        const eventId = item.getAttribute('data-id');
+        const content = document.getElementById('eventContent');
+        if (eventId === '1') {
+          content.innerHTML = `
+            <h3>Webinar on Web Design</h3>
+            <p><strong>Date:</strong> June 15, 2025</p>
+            <p><strong>Time:</strong> 10:00 AM - 12:00 PM</p>
+            <p><strong>Description:</strong> Dive into cutting-edge web design trends and techniques.</p>
+            <button class="back-button">Register Now</button>
+          `;
+        } else if (eventId === '2') {
+          content.innerHTML = `
+            <h3>Tech Conference 2025</h3>
+            <p><strong>Date:</strong> July 10, 2025</p>
+            <p><strong>Time:</strong> 9:00 AM - 5:00 PM</p>
+            <p><strong>Description:</strong> Connect with leading tech innovators and explore emerging technologies.</p>
+            <button class="back-button">Register Now</button>
+          `;
+        } else if (eventId === '3') {
+          content.innerHTML = `
+            <h3>Startup Pitch Night</h3>
+            <p><strong>Date:</strong> August 5, 2025</p>
+            <p><strong>Time:</strong> 6:00 PM - 9:00 PM</p>
+            <p><strong>Description:</strong> Pitch your ideas to investors, network with partners, and kickstart your startup journey.</p>
+            <button class="back-button">Register Now</button>
+          `;
+        }
+        showSection('eventDetails');
+      });
+    });
+    // Back button in Event Details returns to Event Listing
+    document.getElementById('backToListing').addEventListener('click', () => showSection('eventListing'));
+  </script>
+</body>
+</html>
+
