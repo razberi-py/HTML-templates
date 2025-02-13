@@ -183,3 +183,104 @@
     #speakers li:hover {
       background: var(--accent-gray);
     }
+
+    
+    /* Venue Info Section */
+    #venue {
+      background: linear-gradient(135deg, #222, #444);
+      border: 1px solid var(--accent-gray);
+      animation: slideIn 0.7s ease-out;
+    }
+    #venue h2 {
+      color: var(--primary-red);
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    #venue p {
+      line-height: 1.6;
+      color: #fff;
+    }
+
+    /* FAQ Section */
+    #faq {
+      background: linear-gradient(135deg, #333, #111);
+      border: 1px solid var(--accent-gray);
+      animation: fadeIn 0.7s ease-out;
+    }
+    #faq h2 {
+      color: var(--primary-red);
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+    #faq ul {
+      list-style: none;
+      padding: 0;
+    }
+    #faq li {
+      padding: 10px;
+      border-bottom: 1px solid var(--accent-gray);
+      transition: background 0.3s;
+    }
+    #faq li:hover {
+      background: var(--accent-gray);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Event Portal</h1>
+    <p>Experience events in a dynamic, dark-themed UI</p>
+  </div>
+  <div class="nav">
+    <button id="btnListing">Event Listing</button>
+    <button id="btnDetails">Event Details</button>
+    <button id="btnSpeakers">Speakers</button>
+    <button id="btnVenue">Venue Info</button>
+    <button id="btnFAQ">FAQ</button>
+  </div>
+  <div class="content">
+    <!-- Event Listing Section -->
+    <div id="eventListing" class="section">
+      <h2>Upcoming Events</h2>
+      <ul>
+        <li data-id="1">Webinar on Web Design - June 15, 2025</li>
+        <li data-id="2">Tech Conference 2025 - July 10, 2025</li>
+        <li data-id="3">Startup Pitch Night - August 5, 2025</li>
+      </ul>
+    </div>
+    <!-- Event Details Section -->
+    <div id="eventDetails" class="section hidden">
+      <h2>Event Details</h2>
+      <div id="eventContent">
+        <p>Select an event from the listing to view details.</p>
+      </div>
+      <button class="back-button" id="backToListing">Back to Listing</button>
+    </div>
+    <!-- Speakers Section -->
+    <div id="speakers" class="section hidden">
+      <h2>Featured Speakers</h2>
+      <ul>
+        <li><strong>Jane Doe</strong> - UI/UX visionary redefining digital aesthetics.</li>
+        <li><strong>John Smith</strong> - Tech innovator setting new industry standards.</li>
+        <li><strong>Emily White</strong> - Startup mentor fueling groundbreaking ideas.</li>
+      </ul>
+    </div>
+    <!-- Venue Info Section -->
+    <div id="venue" class="section hidden">
+      <h2>Venue Information</h2>
+      <p><strong>Location:</strong> Grand Convention Center, Downtown</p>
+      <p><strong>Address:</strong> 123 Main Street, Metropolis</p>
+      <p><strong>Map:</strong> [Embed map or link here]</p>
+    </div>
+    <!-- FAQ Section -->
+    <div id="faq" class="section hidden">
+      <h2>Frequently Asked Questions</h2>
+      <ul>
+        <li><strong>How do I register?</strong> Click 'Register Now' in the event details.</li>
+        <li><strong>What is the refund policy?</strong> Please review our terms &amp; conditions.</li>
+        <li><strong>Need help?</strong> Contact our support team via the contact page.</li>
+      </ul>
+    </div>
+  </div>
