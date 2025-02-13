@@ -380,5 +380,95 @@
       </div>
     </div>
   </div>
-  
+    <script>
+    // Navigation handling
+    const navButtons = document.querySelectorAll('nav button');
+    const pages = document.querySelectorAll('.page');
+    navButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const target = button.getAttribute('data-target');
+        pages.forEach(page => {
+          page.id === target ? page.classList.add('active') : page.classList.remove('active');
+        });
+      });
+    });
+    
+    // Event data
+    const events = {
+      "1": {
+        title: "Neon Web Design Webinar",
+        date: "June 15, 2025",
+        time: "10:00 AM - 12:00 PM",
+        location: "Virtual Auditorium",
+        description: "Experience an electrifying webinar on modern web design—infused with neon energy and futuristic insights.",
+        agenda: [
+          "Welcome and Introduction",
+          "Modern Design Trends",
+          "Interactive Q&A"
+        ]
+      },
+      "2": {
+        title: "Future Tech Conference",
+        date: "July 10, 2025",
+        time: "9:00 AM - 5:00 PM",
+        location: "Cyber Dome",
+        description: "Join industry leaders to explore breakthrough technologies and cyber innovations at this immersive conference.",
+        agenda: [
+          "Keynote Address",
+          "Panel Discussion",
+          "Networking Session"
+        ]
+      },
+      "3": {
+        title: "Startup Disrupt Night",
+        date: "August 5, 2025",
+        time: "6:00 PM - 9:00 PM",
+        location: "Innovation Hub",
+        description: "Pitch your startup idea, network with cyber investors, and disrupt the norm at our dynamic event.",
+        agenda: [
+          "Startup Pitches",
+          "Investor Q&A",
+          "Closing Remarks"
+        ]
+      },
+      "4": {
+        title: "Cyber Security Summit",
+        date: "September 20, 2025",
+        time: "8:00 AM - 4:00 PM",
+        location: "SecureNet Arena",
+        description: "Learn the latest in cybersecurity trends and defense tactics from industry experts.",
+        agenda: [
+          "Security Trends",
+          "Live Demonstrations",
+          "Interactive Workshops"
+        ]
+      },
+      "5": {
+        title: "Virtual Reality Expo",
+        date: "October 15, 2025",
+        time: "11:00 AM - 7:00 PM",
+        location: "VR Nexus",
+        description: "Dive into the future of virtual reality, with live demos and interactive experiences.",
+        agenda: [
+          "VR Demos",
+          "Interactive Zones",
+          "Expert Panels"
+        ]
+      },
+      "6": {
+        title: "AI Innovators Meetup",
+        date: "November 5, 2025",
+        time: "2:00 PM - 6:00 PM",
+        location: "Digital Lab",
+        description: "Explore how artificial intelligence is reshaping industries at this engaging meetup.",
+        agenda: [
+          "AI Presentations",
+          "Round Table Discussions",
+          "Networking"
+        ]
+      }
+    };
+    
     
