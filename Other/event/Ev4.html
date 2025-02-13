@@ -224,4 +224,161 @@
     .speaker-card p {
       font-size: 0.9em;
     }
+
+    
+    /* Venue Page */
+    #venue h2 {
+      color: var(--neonGreen);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #venue .venue-info {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 0 10px var(--neonGreen);
+      text-align: center;
+    }
+    #venue .map-placeholder {
+      background: #111;
+      height: 300px;
+      border: 2px dashed var(--neonGreen);
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: var(--neonGreen);
+    }
+    
+    /* FAQ Page */
+    #faq h2 {
+      color: var(--neonPink);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .faq-item {
+      background: #1a1a1a;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      max-width: 800px;
+      box-shadow: 0 0 10px var(--neonPink);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .faq-item:hover {
+      background: #2a2a2a;
+    }
+    .faq-item h3 {
+      font-size: 1.1em;
+      position: relative;
+      padding-right: 25px;
+    }
+    .faq-item h3::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+    .faq-item.active h3::after {
+      content: '-';
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      margin-top: 10px;
+      display: none;
+      font-size: 1em;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cyber Event Hub</h1>
+  </header>
+  <nav>
+    <button data-target="eventListing" class="active">Events</button>
+    <button data-target="eventDetails">Details</button>
+    <button data-target="speakers">Speakers</button>
+    <button data-target="venue">Venue</button>
+    <button data-target="faq">FAQ</button>
+  </nav>
+  <div class="container">
+    <!-- Event Listing Page -->
+    <div class="page active" id="eventListing">
+      <h2>Upcoming Cyber Events</h2>
+      <ul class="event-list">
+        <li data-id="1">Neon Web Design Webinar - June 15, 2025</li>
+        <li data-id="2">Future Tech Conference - July 10, 2025</li>
+        <li data-id="3">Startup Disrupt Night - August 5, 2025</li>
+        <li data-id="4">Cyber Security Summit - September 20, 2025</li>
+        <li data-id="5">Virtual Reality Expo - October 15, 2025</li>
+        <li data-id="6">AI Innovators Meetup - November 5, 2025</li>
+      </ul>
+    </div>
+    <!-- Enhanced Event Details Page -->
+    <div class="page" id="eventDetails">
+      <div class="detail-card">
+        <!-- Dynamic event details load here -->
+      </div>
+    </div>
+    <!-- Speakers Page -->
+    <div class="page" id="speakers">
+      <h2>Our Cyber Speakers</h2>
+      <div class="speaker-grid">
+        <div class="speaker-card">
+          <img src="https://via.placeholder.com/80" alt="Speaker 1" />
+          <h3>Nova Flux</h3>
+          <p>Futuristic Designer</p>
+        </div>
+        <div class="speaker-card">
+          <img src="https://via.placeholder.com/80" alt="Speaker 2" />
+          <h3>Byte Master</h3>
+          <p>Tech Visionary</p>
+        </div>
+        <div class="speaker-card">
+          <img src="https://via.placeholder.com/80" alt="Speaker 3" />
+          <h3>Echo Pulse</h3>
+          <p>Startup Guru</p>
+        </div>
+      </div>
+    </div>
+    <!-- Venue Page -->
+    <div class="page" id="venue">
+      <h2>Cyber Venue</h2>
+      <div class="venue-info">
+        <p><strong>Location:</strong> Neon Convention Center</p>
+        <p><strong>Address:</strong> 404 Cyber Lane, Matrix City</p>
+      </div>
+      <div class="map-placeholder">Map Loading...</div>
+    </div>
+    <!-- FAQ Page -->
+    <div class="page" id="faq">
+      <h2>Cyber FAQ</h2>
+      <div class="faq-item">
+        <h3>How do I join an event?</h3>
+        <div class="faq-answer">Simply click on an event to view details and register instantly.</div>
+      </div>
+      <div class="faq-item">
+        <h3>What are the fees?</h3>
+        <div class="faq-answer">Event pricing is displayed on each event's detail page.</div>
+      </div>
+      <div class="faq-item">
+        <h3>Need support?</h3>
+        <div class="faq-answer">Contact our support team via live chat on our website.</div>
+      </div>
+    </div>
+  </div>
+  
     
