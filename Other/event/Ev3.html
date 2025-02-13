@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Portal - Dark Overhaul</title>
+  <style>
+    /* Root Variables */
+    :root {
+      --bg-primary: #151515;
+      --bg-sidebar: #1f1f1f;
+      --bg-content: #151515;
+      --card-bg: #222222;
+      --text-color: #e0e0e0;
+      --accent-purple: #8e44ad;
+      --accent-blue: #2980b9;
+      --accent-green: #27ae60;
+      --accent-orange: #e67e22;
+    }
+
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: var(--bg-sidebar);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--accent-blue);
+    }
+    .sidebar .menu {
+      list-style: none;
+      flex-grow: 1;
+    }
+    .sidebar .menu li {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-align: center;
+      font-size: 1.1em;
+    }
+    .sidebar .menu li:hover {
+      background: var(--accent-purple);
+      transform: scale(1.05);
+    }
+    .sidebar .menu li.active {
+      background: var(--accent-purple);
+    }
+
+    /* Content Area */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: var(--bg-content);
+    }
+    .page {
+      animation: fadeIn 0.5s ease;
+    }
+    .hidden {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Event Listing Page */
+    #eventListing {
+      padding: 20px;
+    }
+    #eventListing h2 {
+      margin-bottom: 20px;
+      color: var(--accent-orange);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .event-list {
+      list-style: none;
+    }
+    .event-list li {
+      background: var(--card-bg);
+      margin-bottom: 15px;
+      padding: 15px;
+      border-left: 6px solid var(--accent-orange);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .event-list li:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+
+    /* Event Details Page */
+    #eventDetails {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    #eventDetails .detail-card {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    #eventDetails h2 {
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+    #eventDetails p {
+      margin: 10px 0;
+      color: var(--text-color);
+    }
+    #eventDetails button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: var(--accent-green);
+      border: none;
+      border-radius: 8px;
+      color: var(--text-color);
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #eventDetails button:hover {
+      background: #1e8449;
+    }
+
+    /* Speakers Page */
+    #speakers {
+      padding: 20px;
+    }
+    #speakers h2 {
+      margin-bottom: 20px;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .speaker-card {
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+    .speaker-card:hover {
+      transform: translateY(-5px);
+    }
+    .speaker-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 2px solid var(--accent-blue);
+    }
+    .speaker-card h3 {
+      margin-bottom: 5px;
+      color: var(--accent-blue);
+    }
+    .speaker-card p {
+      font-size: 0.9em;
+      color: var(--text-color);
+    }
+
+    /* Venue Page */
+    #venue {
+      padding: 20px;
+    }
+    #venue h2 {
+      margin-bottom: 20px;
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #venue .venue-info {
+      background: rgba(20, 20, 20, 0.8);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+    #venue .map-placeholder {
+      background: #2c3e50;
+      height: 300px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: var(--text-color);
+    }
+
+    /* FAQ Page */
+    #faq {
+      padding: 20px;
+    }
+    #faq h2 {
+      margin-bottom: 20px;
+      color: var(--accent-green);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      transition: background 0.3s;
+    }
+    .faq-item:hover {
+      background: #2b2b2b;
+    }
+    .faq-question {
+      font-size: 1.1em;
+      cursor: pointer;
+      position: relative;
+      padding-right: 25px;
+    }
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+    .faq-item.active .faq-question::after {
+      content: '-';
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      margin-top: 10px;
+      display: none;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo">EventX</div>
+      <ul class="menu">
+        <li data-target="eventListing" class="active">Events</li>
+        <li data-target="eventDetails">Details</li>
+        <li data-target="speakers">Speakers</li>
+        <li data-target="venue">Venue</li>
+        <li data-target="faq">FAQ</li>
+      </ul>
+    </aside>
+    <!-- Right Content Area -->
+    <main class="content">
+      <!-- Event Listing Page -->
+      <div id="eventListing" class="page">
+        <h2>Upcoming Events</h2>
+        <ul class="event-list">
+          <li data-id="1">Webinar on Web Design - June 15, 2025</li>
+          <li data-id="2">Tech Conference 2025 - July 10, 2025</li>
+          <li data-id="3">Startup Pitch Night - August 5, 2025</li>
+        </ul>
+      </div>
+      <!-- Event Details Page -->
+      <div id="eventDetails" class="page hidden">
+        <div class="detail-card">
+          <!-- Dynamic content will load here -->
+        </div>
+      </div>
+      <!-- Speakers Page -->
+      <div id="speakers" class="page hidden">
+        <h2>Featured Speakers</h2>
+        <div class="speaker-grid">
+          <div class="speaker-card">
+            <img src="https://via.placeholder.com/80" alt="Speaker 1" />
+            <h3>Jane Doe</h3>
+            <p>Digital Design Expert</p>
+          </div>
+          <div class="speaker-card">
+            <img src="https://via.placeholder.com/80" alt="Speaker 2" />
+            <h3>John Smith</h3>
+            <p>Tech Innovator</p>
+          </div>
+          <div class="speaker-card">
+            <img src="https://via.placeholder.com/80" alt="Speaker 3" />
+            <h3>Emily White</h3>
+            <p>Startup Mentor</p>
+          </div>
+        </div>
+      </div>
+      <!-- Venue Page -->
+      <div id="venue" class="page hidden">
+        <h2>Venue Information</h2>
+        <div class="venue-info">
+          <p><strong>Location:</strong> Grand Convention Center, Downtown</p>
+          <p><strong>Address:</strong> 123 Main Street, Metropolis</p>
+        </div>
+        <div class="map-placeholder">Map View</div>
+      </div>
+      <!-- FAQ Page -->
+      <div id="faq" class="page hidden">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <div class="faq-question">How do I register?</div>
+          <div class="faq-answer">Click on an event in the listing to view details and register.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What is the refund policy?</div>
+          <div class="faq-answer">Please review our terms and conditions for refund details.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Need assistance?</div>
+          <div class="faq-answer">Contact our support team via our contact page.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    // Sidebar Navigation Handling
+    const menuItems = document.querySelectorAll('.menu li');
+    const pages = document.querySelectorAll('.page');
+    menuItems.forEach(item => {
+      item.addEventListener('click', function() {
+        menuItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.getAttribute('data-target');
+        pages.forEach(page => {
+          page.id === target ? page.classList.remove('hidden') : page.classList.add('hidden');
+        });
+      });
+    });
+
+    // Event Data
+    const events = {
+      "1": {
+        title: "Webinar on Web Design",
+        date: "June 15, 2025",
+        time: "10:00 AM - 12:00 PM",
+        description: "Dive into cutting-edge web design trends and interactive techniques."
+      },
+      "2": {
+        title: "Tech Conference 2025",
+        date: "July 10, 2025",
+        time: "9:00 AM - 5:00 PM",
+        description: "Connect with leading tech innovators and explore emerging technologies."
+      },
+      "3": {
+        title: "Startup Pitch Night",
+        date: "August 5, 2025",
+        time: "6:00 PM - 9:00 PM",
+        description: "Present your startup idea, network with investors, and ignite your entrepreneurial journey."
+      }
+    };
+
+    // Load Event Details on Click
+    const eventListItems = document.querySelectorAll('.event-list li');
+    eventListItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const eventId = this.getAttribute('data-id');
+        const eventData = events[eventId];
+        const detailCard = document.querySelector('#eventDetails .detail-card');
+        detailCard.innerHTML = `
+          <h2>${eventData.title}</h2>
+          <p><strong>Date:</strong> ${eventData.date}</p>
+          <p><strong>Time:</strong> ${eventData.time}</p>
+          <p><strong>Description:</strong> ${eventData.description}</p>
+          <button id="registerButton">Register Now</button>
+        `;
+        // Activate Event Details Page
+        menuItems.forEach(i => i.classList.remove('active'));
+        document.querySelector('.menu li[data-target="eventDetails"]').classList.add('active');
+        pages.forEach(page => {
+          page.id === 'eventDetails' ? page.classList.remove('hidden') : page.classList.add('hidden');
+        });
+      });
+    });
+
+    // FAQ Accordion Toggle
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
