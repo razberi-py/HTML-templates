@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Portal - Purple Blue Theme</title>
+  <style>
+    /* Color Variables */
+    :root {
+      --primary-purple: #6a11cb;
+      --primary-blue: #2575fc;
+      --background-black: #0d0d0d;
+      --accent-gray: #444;
+      --text-white: #fff;
+      --section-bg: #1c1c1c;
+    }
+
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: var(--background-black);
+      color: var(--text-white);
+      line-height: 1.6;
+    }
+
+    /* Header Styling */
+    .header {
+      background: linear-gradient(90deg, var(--primary-purple), var(--primary-blue));
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.8em;
+    }
+    .header p {
+      margin: 5px 0 0;
+      font-size: 1.2em;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px 0;
+      background: var(--section-bg);
+    }
+    .nav button,
+    .back-button {
+      background: transparent;
+      border: 2px solid var(--primary-purple);
+      color: var(--text-white);
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .nav button:hover,
+    .back-button:hover {
+      background: var(--primary-purple);
+      transform: scale(1.05);
+    }
+
+    /* Content Container */
+    .content {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    /* Base Section Styles */
+    .section {
+      background: var(--section-bg);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.8s ease;
+    }
+    .hidden {
+      display: none;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
