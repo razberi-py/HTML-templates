@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Event Hub</title>
+  <style>
+    /* Root Variables */
+    :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --neonPink: #ff007f;
+      --neonBlue: #00ffff;
+      --neonGreen: #39ff14;
+      --neonOrange: #ff8000;
+    }
+    
+    /* Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(90deg, var(--neonPink), var(--neonBlue));
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px var(--neonPink);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px var(--neonBlue);
+    }
+    nav {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    nav button {
+      background: transparent;
+      border: 2px solid var(--neonPink);
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1em;
+      transition: all 0.3s;
+      position: relative;
+    }
+    nav button:hover, nav button.active {
+      border-color: var(--neonBlue);
+      box-shadow: 0 0 10px var(--neonBlue);
+      transform: scale(1.05);
+    }
+    .container {
+      padding: 20px;
+    }
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Event Listing Page */
+    #eventListing h2 {
+      color: var(--neonOrange);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .event-list {
+      list-style: none;
+      padding: 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .event-list li {
+      background: #1a1a1a;
+      margin: 10px 0;
+      padding: 15px;
+      border-left: 5px solid var(--neonOrange);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .event-list li:hover {
+      transform: translateX(8px);
+      box-shadow: 0 0 15px var(--neonOrange);
+    }
+    
+    /* Enhanced Event Details Page */
+    #eventDetails .detail-card {
+      background: linear-gradient(135deg, var(--neonBlue), var(--neonPink));
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: 20px auto;
+      box-shadow: 0 0 20px var(--neonBlue);
+      text-align: center;
+    }
+    #eventDetails h2 {
+      margin-bottom: 15px;
+      font-size: 2em;
+      text-shadow: 0 0 10px var(--neonPink);
+    }
+    #eventDetails p {
+      margin: 10px 0;
+      font-size: 1.1em;
+      line-height: 1.5;
+    }
+    #eventDetails .event-location {
+      font-style: italic;
+      color: var(--neonGreen);
+    }
+    #eventDetails .event-image {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 2px solid var(--neonGreen);
+    }
+    /* Agenda Section */
+    #eventDetails .event-agenda {
+      text-align: left;
+      margin: 20px 0;
+    }
+    #eventDetails .event-agenda h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      text-decoration: underline;
+    }
+    #eventDetails .event-agenda ul {
+      list-style: disc;
+      margin-left: 20px;
+      text-align: left;
+    }
+    /* Registration Section */
+    #eventDetails .registration-section {
+      margin-top: 30px;
+    }
+    #eventDetails .registration-section h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    #eventDetails .registration-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    #eventDetails .registration-section input {
+      padding: 10px;
+      width: 80%;
+      max-width: 300px;
+      border: none;
+      border-radius: 4px;
+    }
+    #eventDetails .registration-section button {
+      padding: 12px 25px;
+      background: var(--neonGreen);
+      border: none;
+      border-radius: 8px;
+      color: var(--bg);
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #eventDetails .registration-section button:hover {
+      background: #2ecc71;
+    }
+    
+    /* Speakers Page */
+    #speakers h2 {
+      color: var(--neonBlue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .speaker-card {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+      box-shadow: 0 0 10px var(--neonBlue);
+    }
+    .speaker-card:hover {
+      transform: translateY(-5px);
+    }
+    .speaker-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 2px solid var(--neonBlue);
+    }
+    .speaker-card h3 {
+      margin-bottom: 5px;
+      color: var(--neonBlue);
+    }
+    .speaker-card p {
+      font-size: 0.9em;
+    }
+    
