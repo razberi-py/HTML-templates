@@ -471,4 +471,53 @@
       }
     };
     
+    // Load event details on click
+    const eventItems = document.querySelectorAll('.event-list li');
+    eventItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const eventId = this.getAttribute('data-id');
+        const eventData = events[eventId];
+        const detailCard = document.querySelector('#eventDetails .detail-card');
+        detailCard.innerHTML = `
+          <h2>${eventData.title}</h2>
+          <p><strong>Date:</strong> ${eventData.date}</p>
+          <p><strong>Time:</strong> ${eventData.time}</p>
+          <p class="event-location"><strong>Location:</strong> ${eventData.location}</p>
+          <img src="https://via.placeholder.com/600x200" alt="Event Image" class="event-image" />
+          <p>${eventData.description}</p>
+          <div class="event-agenda">
+            <h3>Agenda</h3>
+            <ul>
+              ${eventData.agenda.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="registration-section">
+            <h3>Register Now</h3>
+            <form id="registrationForm">
+              <input type="text" placeholder="Your Name" required>
+              <input type="email" placeholder="Your Email" required>
+              <button type="submit">Register</button>
+            </form>
+          </div>
+        `;
+        // Switch to Event Details page
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector('nav button[data-target="eventDetails"]').classList.add('active');
+        pages.forEach(page => {
+          page.id === 'eventDetails' ? page.classList.add('active') : page.classList.remove('active');
+        });
+      });
+    });
+    
+    // FAQ Accordion Toggle
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.querySelector('h3').addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
+
     
