@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Topographic Login/Signup</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: #0a0a0a;
+      overflow: hidden;
+      position: relative;
+      color: #eee;
+    }
+    /* Canvas for Contour Lines Background */
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: #0a0a0a;
+    }
+    /* Browser-Style Window Container */
+    .window {
+      width: 600px;
+      background: rgba(20,20,20,0.95);
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.9);
+      overflow: hidden;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #333;
+    }
+    /* Window Header */
+    .window-header {
+      background: linear-gradient(90deg, #3CB371, #20B2AA);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+    }
+    .window-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .control {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .control.red { background: #ff5f57; }
+    .control.yellow { background: #ffbd2e; }
+    .control.green { background: #28c840; }
+    .window-title {
+      margin-left: 15px;
+      font-size: 18px;
+      color: #fff;
+      font-weight: bold;
+      flex: 1;
+    }
+    /* Tab Bar */
+    .tab-bar {
+      display: flex;
+      background: #2a2a2a;
+      border-bottom: 2px solid #444;
+    }
+    .tab {
+      flex: 1;
+      padding: 15px;
+      background: none;
+      border: none;
+      color: #bbb;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .tab:hover { background: #3a3a3a; }
+    .tab.active {
+      background: #1a1a1a;
+      color: #fff;
+      border-bottom: 3px solid #3CB371;
+    }
+    /* Content Area */
+    .tab-content {
+      padding: 30px;
+      background: #1a1a1a;
+      min-height: 320px;
+      position: relative;
+    }
+    /* Forms */
+    form { display: none; animation: fadeIn 0.4s ease; }
+    form.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ccc;
+      font-size: 14px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 5px;
+      border: none;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+    }
+    .form-group input:focus {
+      outline: none;
+      box-shadow: 0 0 5px #3CB371;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      background: #3CB371;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .form-group button:hover { background: #20B2AA; }
+    /* Forgot Password */
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .forgot-password a {
+      color: #3CB371;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .forgot-password a:hover { text-decoration: underline; }
+    /* Social Login Section */
+    .social-login {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .social-login p {
+      margin-bottom: 10px;
+      color: #aaa;
+      font-size: 14px;
+    }
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .social-btn {
+      background: transparent;
+      border: 1px solid #aaa;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .social-btn:hover { border-color: #3CB371; transform: scale(1.1); }
+    .social-btn svg {
+      width: 20px; height: 20px;
+      fill: #aaa;
+    }
+    .social-btn:hover svg { fill: #3CB371; }
+    /* Help Icon */
+    .help-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #3CB371;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .help-icon:hover { opacity: 1; }
+    .help-icon svg { width: 16px; height: 16px; fill: #3CB371; }
+    .help-icon span { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <!-- Canvas for Animated Contour Lines Background -->
+  <canvas id="canvas"></canvas>
+  
+  <!-- Browser-Style Login/Signup Window -->
+  <div class="window">
+    <div class="window-header">
+      <div class="window-controls">
+        <span class="control red"></span>
+        <span class="control yellow"></span>
+        <span class="control green"></span>
+      </div>
+      <div class="window-title">MyApp - Login/Signup</div>
+    </div>
+    <div class="tab-bar">
+      <button id="tabLogin" class="tab active">Login</button>
+      <button id="tabSignup" class="tab">Sign Up</button>
+    </div>
+    <div class="tab-content">
+      <!-- Login Form -->
+      <form id="formLogin" class="active">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
+        <div class="form-group">
+          <button type="submit">Login</button>
+        </div>
+        <div class="social-login">
+          <p>Or login with</p>
+          <div class="social-buttons">
+            <button class="social-btn" title="Login with Google">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M21.35 11.1h-9.18v2.77h5.26c-.23 1.29-.96 2.38-2.03 3.12l3.22 2.5c1.88-1.74 2.98-4.31 2.98-7.39 0-.52-.04-1.03-.1-1.54z"/>
+                <path d="M12.17 22c2.75 0 5.07-.91 6.76-2.48l-3.22-2.5c-.9.6-2.05.96-3.54.96-2.72 0-5.03-1.83-5.87-4.29H3.03v2.69A9.99 9.99 0 0 0 12.17 22z"/>
+                <path d="M6.3 13.46a5.97 5.97 0 0 1 0-3.73V7.04H3.03a9.98 9.98 0 0 0 0 9.92l3.27-3.5z"/>
+                <path d="M12.17 5.42c1.49 0 2.83.51 3.88 1.51l2.92-2.92C17.24 2.67 14.92 1.67 12.17 1.67 7.82 1.67 4.17 4.67 3.03 7.04l3.27 2.69c.84-2.46 3.15-4.29 5.87-4.29z"/>
+              </svg>
+            </button>
+            <button class="social-btn" title="Login with Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.337v21.326C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.127V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12V24h6.116c.728 0 1.325-.597 1.325-1.337V1.337C24 .597 23.403 0 22.675 0z"/>
+              </svg>
+            </button>
+            <button class="social-btn" title="Login with Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M24 4.557a9.83 9.83 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.564-2.005.974-3.127 1.195a4.916 4.916 0 0 0-8.384 4.482C7.691 8.094 4.066 6.13 1.64 3.161a4.822 4.822 0 0 0-.666 2.475 4.916 4.916 0 0 0 2.188 4.096 4.903 4.903 0 0 1-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 0 1-2.224.084 4.923 4.923 0 0 0 4.598 3.417A9.867 9.867 0 0 1 0 19.54a13.94 13.94 0 0 0 7.548 2.212c9.055 0 14.002-7.496 14.002-13.986 0-.21 0-.423-.015-.633A10.012 10.012 0 0 0 24 4.557z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Sign Up Form -->
+      <form id="formSignup">
+        <div class="form-group">
+          <label for="signupName">Name</label>
+          <input type="text" id="signupName" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+      <!-- Help Icon -->
+      <div class="help-icon" title="Need help?">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 0a12 12 0 1 0 12 12A12.013 12.013 0 0 0 12 0Zm1 18h-2v-2h2Zm1.07-7.75-1.2 1.2a1.5 1.5 0 0 1-1.37.7c-.9 0-1.5-.78-1.5-1.5a1 1 0 0 1 2 0 0.5 0.5 0 0 0 .5.5 0.5 0.5 0 0 0 .5-.5 2.5 2.5 0 1 0-4-2 1 1 0 0 1 0-2 4.5 4.5 0 1 1 5.57 4.25Z"/>
+        </svg>
+        <span>Help</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Animated Contour Lines Background Script -->
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Parameters for contour lines
+    const lineSpacing = 30; // vertical spacing between contour lines
+    const amplitude = 20;   // amplitude of sine wave variation
+    const wavelength = 200; // wavelength of sine waves
+    let time = 0;
+    
+    function drawContourLines() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // For each contour line (starting a bit off the top to cover full canvas)
+      for (let y = -lineSpacing; y < canvas.height + lineSpacing; y += lineSpacing) {
+        ctx.beginPath();
+        // Move along x in steps and calculate a sine-based offset
+        for (let x = 0; x <= canvas.width; x += 5) {
+          const offset = Math.sin((x + time) / wavelength) * amplitude;
+          const yy = y + offset;
+          if (x === 0) {
+            ctx.moveTo(x, yy);
+          } else {
+            ctx.lineTo(x, yy);
+          }
+        }
+        ctx.strokeStyle = "rgba(60, 179, 113, 0.6)"; // medium sea green with some transparency
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+      
+      // Slowly increase time for animation
+      time += 0.5;
+      requestAnimationFrame(drawContourLines);
+    }
+    
+    drawContourLines();
+    
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+  
+  <!-- Tab Switching Script -->
+  <script>
+    const tabLogin = document.getElementById("tabLogin");
+    const tabSignup = document.getElementById("tabSignup");
+    const formLogin = document.getElementById("formLogin");
+    const formSignup = document.getElementById("formSignup");
+    
+    tabLogin.addEventListener("click", () => {
+      tabLogin.classList.add("active");
+      tabSignup.classList.remove("active");
+      formLogin.classList.add("active");
+      formSignup.classList.remove("active");
+    });
+    
+    tabSignup.addEventListener("click", () => {
+      tabSignup.classList.add("active");
+      tabLogin.classList.remove("active");
+      formSignup.classList.add("active");
+      formLogin.classList.remove("active");
+    });
+  </script>
+</body>
+</html>
