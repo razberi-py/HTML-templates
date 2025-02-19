@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Midnight Ledger News</title>
+  <style>
+    /* Basic Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f8f3e9; /* Creamy background */
+      color: #333;
+      overflow-x: hidden;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+    
+    /* SIDEBAR NAVIGATION */
+    .sidebar {
+      background-color: #e8e2d9;
+      width: 240px;
+      min-height: 100vh;
+      border-right: 2px solid #ccc;
+      padding: 20px 0;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    .sidebar .logo {
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #8b4513; /* Subtle red-brown accent */
+      margin-bottom: 30px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .sidebar ul li a {
+      display: block;
+      padding: 12px 0;
+      border-radius: 4px;
+      background-color: #dcd1c0;
+      transition: background-color 0.3s, transform 0.3s;
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #333;
+      border: 1px solid transparent;
+    }
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background-color: #8b4513;
+      transform: scale(1.05);
+      border-color: #8b4513;
+      color: #fff;
+    }
+    
+    /* MAIN CONTENT AREA */
+    .main-content {
+      margin-left: 240px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f8f3e9;
+    }
+    header.main-header {
+      padding: 20px 40px;
+      background-color: #e8e2d9;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+    header.main-header h1 {
+      font-size: 2.5em;
+      color: #8b4513;
+      letter-spacing: 1px;
+    }
+    .container {
+      flex: 1;
+      padding: 30px 40px;
+    }
+    
+    /* PAGE BASE STYLE */
+    .page { display: none; animation: fadeIn 0.5s ease-in-out; }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* FOOTER */
+    footer {
+      background-color: #e8e2d9;
+      padding: 15px 40px;
+      border-top: 1px solid #ccc;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+    }
+    
+    /* NEWS PAGE */
+    #news {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    #news h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #8b4513;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    .news-articles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .article {
+      background-color: #f8f3e9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+    .article:hover { transform: translateY(-3px); }
+    .article img {
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .article h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #8b4513;
+    }
+    .article p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .article .actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .article .actions button {
+      background-color: #8b4513;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .article .actions button:hover { background-color: #a0522d; }
+    .article .actions .like-count {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .subscription {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      max-width: 500px;
+      margin: 30px auto 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border: 1px solid #ccc;
+    }
+    .subscription h3 { margin-bottom: 15px; color: #8b4513; }
+    .subscription input[type="email"] {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 1em;
+    }
+    .subscription button {
+      padding: 10px 20px;
+      background-color: #8b4513;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .subscription button:hover { background-color: #a0522d; }
+    
+    /* BLOG PAGE */
+    #blog {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 30px;
+    }
+    #blog h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #8b4513;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    .blog-articles {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .blog-article {
+      background-color: #f8f3e9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+    .blog-article:hover { transform: translateY(-3px); }
+    .blog-article h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #8b4513;
+    }
+    .blog-article p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .blog-article .favorite-btn {
+      background-color: #8b4513;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.3s;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .blog-article .favorite-btn:hover { background-color: #a0522d; }
+    
+    /* PORTFOLIO PAGE */
+    #portfolio {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 30px;
+    }
+    #portfolio h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #8b4513;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background-color: #f8f3e9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .project:hover { transform: translateY(-3px); }
+    .project h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #8b4513;
+    }
+    .project p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .project .view-details {
+      background-color: #8b4513;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      transition: background 0.3s;
+    }
+    .project .view-details:hover { background-color: #a0522d; }
+    .project .details {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    
+    /* ABOUT PAGE */
+    #about {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 30px;
+      text-align: center;
+    }
+    #about h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #8b4513;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
+    #about .bio {
+      max-width: 800px;
+      margin: 20px auto;
+      font-size: 1.1em;
+      color: #555;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    #about .credits {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    #about .credits a { color: #8b4513; font-weight: bold; }
+    #about .random-fact {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #e0d8c3;
+      border: 1px solid #8b4513;
+      border-radius: 3px;
+      color: #8b4513;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #about .random-fact:hover { background-color: #d0c4b0; }
+    
+    /* CONTACT PAGE */
+    #contact {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 30px;
+    }
+    #contact h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #8b4513;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #f8f3e9;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    #contact form input,
+    #contact form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      background-color: #fff;
+      color: #333;
+      font-size: 1em;
+    }
+    #contact form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #8b4513;
+      border: none;
+      border-radius: 3px;
+      font-size: 1.1em;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #contact form button:hover { background-color: #a0522d; }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll(".sidebar ul li a");
+      const pages = document.querySelectorAll(".page");
+
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if (page.id === pageID) { page.classList.add("active"); }
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute("data-target");
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(targetPage);
+        });
+      });
+      
+      // Set default active page to News.
+      setActivePage("news");
+
+      /* NEWS PAGE FUNCTIONALITY */
+      document.querySelectorAll(".article").forEach(article => {
+        const likeBtn = article.querySelector(".like-btn");
+        const likeCountEl = article.querySelector(".like-count");
+        let likeCount = 0;
+        if(likeBtn){
+          likeBtn.addEventListener("click", () => {
+            likeCount++;
+            likeCountEl.textContent = `Likes: ${likeCount}`;
+          });
+        }
+        const readMoreBtn = article.querySelector(".read-more");
+        if(readMoreBtn){
+          readMoreBtn.addEventListener("click", () => {
+            const para = article.querySelector("p");
+            if(para.dataset.expanded === "true"){
+              para.textContent = para.dataset.short;
+              para.dataset.expanded = "false";
+              readMoreBtn.textContent = "Read More";
+            } else {
+              para.textContent = para.dataset.full;
+              para.dataset.expanded = "true";
+              readMoreBtn.textContent = "Show Less";
+            }
+          });
+        }
+      });
+      
+      /* BLOG PAGE FUNCTIONALITY */
+      document.querySelectorAll(".blog-article").forEach(article => {
+        const favBtn = article.querySelector(".favorite-btn");
+        let favCount = 0;
+        if(favBtn){
+          favBtn.addEventListener("click", () => {
+            favCount++;
+            favBtn.textContent = `♥ ${favCount}`;
+          });
+        }
+      });
+      
+      /* PORTFOLIO PAGE FUNCTIONALITY */
+      document.querySelectorAll(".project").forEach(project => {
+        const viewBtn = project.querySelector(".view-details");
+        const details = project.querySelector(".details");
+        if(viewBtn){
+          viewBtn.addEventListener("click", () => {
+            if(details.style.display === "block"){
+              details.style.display = "none";
+              viewBtn.textContent = "View Details";
+            } else {
+              details.style.display = "block";
+              viewBtn.textContent = "Hide Details";
+            }
+          });
+        }
+      });
+      
+      /* ABOUT PAGE FUNCTIONALITY */
+      const randomFactBtn = document.querySelector("#about .random-fact");
+      if(randomFactBtn){
+        const facts = [
+          "The first digital news bulletin was broadcast in 1969.",
+          "Formal news layouts evolved from broadsheet newspapers.",
+          "Red is often used to signal urgency and importance.",
+          "Modern journalism values clarity, integrity, and precision."
+        ];
+        randomFactBtn.addEventListener("click", () => {
+          const fact = facts[Math.floor(Math.random() * facts.length)];
+          alert("Random Fact: " + fact);
+        });
+      }
+      
+      /* CONTACT PAGE FUNCTIONALITY */
+      const contactForm = document.querySelector("#contact form");
+      if(contactForm){
+        contactForm.addEventListener("submit", function(e) {
+          e.preventDefault();
+          alert("Thank you for contacting us. We will respond shortly.");
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- SIDEBAR NAVIGATION -->
+  <div class="sidebar">
+    <div class="logo">Midnight Ledger</div>
+    <ul>
+      <li><a href="#" data-target="news" class="active">News</a></li>
+      <li><a href="#" data-target="blog">Blog</a></li>
+      <li><a href="#" data-target="portfolio">Portfolio</a></li>
+      <li><a href="#" data-target="about">About</a></li>
+      <li><a href="#" data-target="contact">Contact</a></li>
+    </ul>
+  </div>
+  
+  <!-- MAIN CONTENT AREA -->
+  <div class="main-content">
+    <header class="main-header">
+      <h1>Midnight Ledger News</h1>
+    </header>
+    <div class="container">
+      <!-- NEWS PAGE -->
+      <div id="news" class="page active">
+        <h2>Top Headlines</h2>
+        <div class="news-articles">
+          <div class="article">
+            <img src="https://via.placeholder.com/400x160/222222/ffffff?text=News+1" alt="News 1">
+            <div class="article-content">
+              <h3>Digital Transformation Drives Corporate Innovation</h3>
+              <p data-short="Corporate strategies are shifting." data-full="Corporate strategies are shifting dramatically as digital transformation redefines operational models. Businesses are rapidly adopting new technologies to stay competitive in a dynamic marketplace." data-expanded="false">
+                Corporate strategies are shifting.
+              </p>
+            </div>
+            <div class="actions">
+              <button class="like-btn">Like</button>
+              <span class="like-count">Likes: 0</span>
+              <button class="read-more">Read More</button>
+            </div>
+          </div>
+          <div class="article">
+            <img src="https://via.placeholder.com/400x160/222222/ffffff?text=News+2" alt="News 2">
+            <div class="article-content">
+              <h3>Global Markets React to New Trade Regulations</h3>
+              <p data-short="Market shifts in global trade." data-full="Global markets react swiftly as new trade regulations are implemented. Analysts predict a period of adjustment with significant impact on international commerce." data-expanded="false">
+                Market shifts in global trade.
+              </p>
+            </div>
+            <div class="actions">
+              <button class="like-btn">Like</button>
+              <span class="like-count">Likes: 0</span>
+              <button class="read-more">Read More</button>
+            </div>
+          </div>
+        </div>
+        <div class="subscription">
+          <h3>Subscribe for Daily Updates</h3>
+          <form>
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- BLOG PAGE -->
+      <div id="blog" class="page">
+        <h2>Insights &amp; Analysis</h2>
+        <div class="blog-articles">
+          <div class="blog-article" style="position:relative;">
+            <h3>Leadership in the Age of Digital Disruption</h3>
+            <p>An in‑depth look at how top executives are adapting to a rapidly changing digital landscape.</p>
+            <button class="favorite-btn">♥ 0</button>
+          </div>
+          <div class="blog-article" style="position:relative;">
+            <h3>Rethinking Business Models for a New Era</h3>
+            <p>Exploring innovative strategies that redefine traditional corporate structures.</p>
+            <button class="favorite-btn">♥ 0</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PORTFOLIO PAGE -->
+      <div id="portfolio" class="page">
+        <h2>Our Professional Portfolio</h2>
+        <div class="portfolio-grid">
+          <div class="project">
+            <h3>Annual Report 2024</h3>
+            <p>A comprehensive review of our fiscal performance and strategic direction.</p>
+            <button class="view-details">View Details</button>
+            <div class="details">This report outlines financial performance, market analysis, and future projections for 2024.</div>
+          </div>
+          <div class="project">
+            <h3>Brand Revitalization</h3>
+            <p>A detailed case study of our recent brand overhaul and messaging strategy.</p>
+            <button class="view-details">View Details</button>
+            <div class="details">The project encompasses a new logo, color palette, and communication strategy aimed at modern audiences.</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ABOUT PAGE -->
+      <div id="about" class="page">
+        <h2>About Midnight Ledger News</h2>
+        <div class="bio">
+          <p>Midnight Ledger News is a premier source for formal, in‑depth reporting on global business, finance, and technology. Our experienced team delivers clear, insightful analysis with an unwavering commitment to accuracy and professionalism.</p>
+          <p>We believe in the power of rigorous research and thoughtful commentary to illuminate the complexities of the modern world.</p>
+        </div>
+        <div class="credits">
+          <p>Script owned and developed by <a href="https://github.com/razberi-py" target="_blank">Razberi</a></p>
+        </div>
+        <div class="random-fact">Click for a Random Fact</div>
+      </div>
+      
+      <!-- CONTACT PAGE -->
+      <div id="contact" class="page">
+        <h2>Contact Us</h2>
+        <form>
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <textarea rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <p>&copy; 2025 Midnight Ledger News. All Rights Reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

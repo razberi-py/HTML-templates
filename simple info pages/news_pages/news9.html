@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CryptoPulse News</title>
+  <style>
+    /* RESET & BASE */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #000, #101010);
+      background-size: 400% 400%;
+      animation: bgShift 20s ease infinite;
+      color: #ccc;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* TOP NAVIGATION */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+      padding: 15px 50px;
+      z-index: 1000;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+    nav a {
+      font-size: 1em;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s, border-bottom 0.3s;
+      color: #ccc;
+    }
+    nav a:hover, nav a.active {
+      color: #39ff14; /* neon green accent */
+      border-bottom: 2px solid #39ff14;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      padding: 0 20px;
+    }
+    /* Each section is treated as a "page" */
+    .page { display: none; animation: fadeIn 0.6s ease-in-out; }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* COMMON ARTICLE CARD STYLE */
+    .card {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.8); }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    .card h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #00bfff; /* neon blue accent */
+    }
+    .card p {
+      font-size: 1em;
+      color: #bbb;
+      margin-bottom: 15px;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .actions button {
+      background: #39ff14;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .actions button:hover { background: #76ff7b; }
+    .actions .like-count {
+      font-size: 0.9em;
+      color: #bbb;
+    }
+
+    /* PAGE SPECIFIC STYLES */
+    /* Top Stories Page */
+    #top-stories h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      color: #39ff14;
+      border-bottom: 2px solid #39ff14;
+      padding-bottom: 10px;
+    }
+    #top-stories .articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+    /* World News Page */
+    #world h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      color: #00bfff;
+      border-bottom: 2px solid #00bfff;
+      padding-bottom: 10px;
+    }
+    #world .articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+    /* Business News Page */
+    #business h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      color: #ff2e63;
+      border-bottom: 2px solid #ff2e63;
+      padding-bottom: 10px;
+    }
+    #business .articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+    /* Technology News Page */
+    #technology h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      color: #ff2e63;
+      border-bottom: 2px solid #ff2e63;
+      padding-bottom: 10px;
+    }
+    #technology .articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+    /* Contact Page */
+    #contact h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      color: #39ff14;
+      border-bottom: 2px solid #39ff14;
+      padding-bottom: 10px;
+    }
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #181818;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+    #contact form input,
+    #contact form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #555;
+      border-radius: 3px;
+      background: #101010;
+      color: #ccc;
+      font-size: 1em;
+    }
+    #contact form button {
+      width: 100%;
+      padding: 12px;
+      background: #39ff14;
+      border: none;
+      border-radius: 3px;
+      font-size: 1.1em;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #contact form button:hover { background: #76ff7b; }
+
+    /* FOOTER */
+    footer {
+      background: #1c1c1c;
+      color: #777;
+      text-align: center;
+      padding: 15px;
+      border-top: 2px solid #333;
+      margin-top: 40px;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Navigation and page toggle functionality
+      const navLinks = document.querySelectorAll("nav a");
+      const pages = document.querySelectorAll(".page");
+      
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if(page.id === pageID) page.classList.add("active");
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(this.getAttribute("data-target"));
+        });
+      });
+      
+      // Set default active page to Top Stories
+      setActivePage("top-stories");
+      
+      // Interactive functionality for article cards
+      document.querySelectorAll(".card").forEach(card => {
+        const likeBtn = card.querySelector(".like-btn");
+        const likeCountEl = card.querySelector(".like-count");
+        let likeCount = 0;
+        if(likeBtn) {
+          likeBtn.addEventListener("click", () => {
+            likeCount++;
+            likeCountEl.textContent = `Likes: ${likeCount}`;
+          });
+        }
+        const readMoreBtn = card.querySelector(".read-more");
+        if(readMoreBtn) {
+          readMoreBtn.addEventListener("click", () => {
+            const para = card.querySelector("p");
+            if(para.dataset.expanded === "true") {
+              para.textContent = para.dataset.short;
+              para.dataset.expanded = "false";
+              readMoreBtn.textContent = "Read More";
+            } else {
+              para.textContent = para.dataset.full;
+              para.dataset.expanded = "true";
+              readMoreBtn.textContent = "Show Less";
+            }
+          });
+        }
+      });
+      
+      /* CONTACT FORM */
+      const contactForm = document.querySelector("#contact form");
+      if(contactForm) {
+        contactForm.addEventListener("submit", function(e) {
+          e.preventDefault();
+          alert("Thank you for contacting us. We will respond shortly.");
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- TOP NAVIGATION -->
+  <header>
+    <nav>
+      <a href="#" data-target="top-stories" class="active">Top Stories</a>
+      <a href="#" data-target="world">World</a>
+      <a href="#" data-target="business">Business</a>
+      <a href="#" data-target="technology">Technology</a>
+      <a href="#" data-target="contact">Contact</a>
+    </nav>
+  </header>
+  
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <!-- Top Stories Page -->
+    <section id="top-stories" class="page active">
+      <h1 class="page-title">Top Stories</h1>
+      <div class="articles">
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Story+1" alt="Story 1">
+          <h2>Crypto Market Surges Amid Global Demand</h2>
+          <p data-short="Cryptocurrencies see rapid gains." data-full="Amid global economic uncertainty, cryptocurrencies are experiencing rapid gains. Analysts attribute this surge to increased institutional adoption and a shift toward decentralized finance." data-expanded="false">
+            Cryptocurrencies see rapid gains.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Story+2" alt="Story 2">
+          <h2>New Crypto Regulations Spark Debate</h2>
+          <p data-short="Regulatory changes create uncertainty." data-full="Governments around the world are introducing new regulations for cryptocurrencies, sparking debates among investors, regulators, and industry experts about the future of digital finance." data-expanded="false">
+            Regulatory changes create uncertainty.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- World News Page -->
+    <section id="world" class="page">
+      <h1 class="page-title">World Crypto News</h1>
+      <div class="articles">
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=World+1" alt="World Story 1">
+          <h2>Global Leaders Discuss Digital Currency Adoption</h2>
+          <p data-short="Diplomatic talks on crypto underway." data-full="World leaders are meeting to discuss the potential benefits and risks of adopting digital currencies on a global scale, aiming to foster financial inclusion and stability." data-expanded="false">
+            Diplomatic talks on crypto underway.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=World+2" alt="World Story 2">
+          <h2>Decentralized Finance Takes Center Stage</h2>
+          <p data-short="DeFi gains global momentum." data-full="The decentralized finance (DeFi) movement is gaining momentum around the world as innovative projects attract massive investments and challenge traditional banking systems." data-expanded="false">
+            DeFi gains global momentum.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Business News Page -->
+    <section id="business" class="page">
+      <h1 class="page-title">Business &amp; Crypto</h1>
+      <div class="articles">
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Business+1" alt="Business Story 1">
+          <h2>Institutional Investment Fuels Crypto Growth</h2>
+          <p data-short="Big players enter crypto." data-full="Institutional investors are increasingly allocating capital to cryptocurrencies as part of their portfolios, fueling unprecedented growth and market liquidity." data-expanded="false">
+            Big players enter crypto.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Business+2" alt="Business Story 2">
+          <h2>Blockchain Solutions Revolutionize Finance</h2>
+          <p data-short="Blockchain is transforming finance." data-full="Blockchain technology is revolutionizing the financial sector by enabling transparent, secure, and efficient transactions, leading to a new wave of fintech innovation." data-expanded="false">
+            Blockchain is transforming finance.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Technology News Page -->
+    <section id="technology" class="page">
+      <h1 class="page-title">Crypto Tech Trends</h1>
+      <div class="articles">
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Tech+1" alt="Tech Story 1">
+          <h2>AI and Blockchain Converge</h2>
+          <p data-short="Tech convergence reshapes crypto." data-full="Artificial intelligence is merging with blockchain technology to create new paradigms in data security, smart contracts, and predictive analytics within the crypto space." data-expanded="false">
+            Tech convergence reshapes crypto.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://via.placeholder.com/400x180/1e1e1e/00eaff?text=Tech+2" alt="Tech Story 2">
+          <h2>Cybersecurity in the Crypto Era</h2>
+          <p data-short="Enhanced security measures emerge." data-full="As cyber threats evolve, the crypto industry is pioneering advanced cybersecurity protocols to protect digital assets and maintain investor confidence." data-expanded="false">
+            Enhanced security measures emerge.
+          </p>
+          <div class="actions">
+            <button class="like-btn">Like</button>
+            <span class="like-count">Likes: 0</span>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+      <h1 class="page-title">Contact Us</h1>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Neon Nexus News. All Rights Reserved.</p>
+  </footer>
+  
+  <script>
+    // Navigation and page toggle functionality
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll("header nav a");
+      const pages = document.querySelectorAll(".page");
+      
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if(page.id === pageID) page.classList.add("active");
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(this.getAttribute("data-target"));
+        });
+      });
+      
+      // Set default active page to Top Stories if not set
+      setActivePage("top-stories");
+
+      /* INTERACTIVE FUNCTIONALITY FOR ARTICLE CARDS */
+      document.querySelectorAll(".card").forEach(card => {
+        const likeBtn = card.querySelector(".like-btn");
+        const likeCountEl = card.querySelector(".like-count");
+        let likeCount = 0;
+        if(likeBtn) {
+          likeBtn.addEventListener("click", () => {
+            likeCount++;
+            likeCountEl.textContent = `Likes: ${likeCount}`;
+          });
+        }
+        const readMoreBtn = card.querySelector(".read-more");
+        if(readMoreBtn) {
+          readMoreBtn.addEventListener("click", () => {
+            const para = card.querySelector("p");
+            if(para.dataset.expanded === "true") {
+              para.textContent = para.dataset.short;
+              para.dataset.expanded = "false";
+              readMoreBtn.textContent = "Read More";
+            } else {
+              para.textContent = para.dataset.full;
+              para.dataset.expanded = "true";
+              readMoreBtn.textContent = "Show Less";
+            }
+          });
+        }
+      });
+      
+      /* CONTACT FORM FUNCTIONALITY */
+      const contactForm = document.querySelector("#contact form");
+      if(contactForm){
+        contactForm.addEventListener("submit", function(e) {
+          e.preventDefault();
+          alert("Thank you for contacting us. We will respond shortly.");
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
