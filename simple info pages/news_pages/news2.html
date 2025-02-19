@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mystical Multi-View Portal</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: #a0c4ff;
+    }
+    
+    /* Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #4b0082, #6a0dad);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      padding: 15px 0;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+    nav li {
+      margin: 0 20px;
+    }
+    nav li a {
+      font-size: 1.2em;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 5px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    nav li a:hover,
+    nav li a.active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    
+    /* Container */
+    .container {
+      position: relative;
+      top: 80px; /* leaves room for fixed header */
+      min-height: calc(100vh - 80px);
+      padding: 40px 20px;
+    }
+    
+    /* Page Base Style */
+    .page {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+      padding-bottom: 60px;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Unique Page Styles */
+    #home {
+      background: linear-gradient(135deg, #7e3ff2, #4b0082);
+      text-align: center;
+      padding: 60px;
+    }
+    #news {
+      background-color: #2d2d2d;
+      border-left: 10px solid #6a0dad;
+      padding: 40px;
+    }
+    #blog {
+      background-color: #252525;
+      border-top: 8px dashed #8a2be2;
+      padding: 40px;
+    }
+    #portfolio {
+      background-color: #1f1f1f;
+      border-right: 10px double #9370db;
+      padding: 40px;
+    }
+    #about {
+      background-color: #282828;
+      border-bottom: 8px dotted #9932cc;
+      padding: 60px 30px;
+      text-align: center;
+    }
+    #contact {
+      background-color: #222;
+      border-left: 10px solid #8b008b;
+      padding: 40px;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #4b0082;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.9em;
+    }
+    
+    /* Additional Content Styles */
+    .content-section {
+      margin-bottom: 30px;
+    }
+    .content-section h2 {
+      margin-bottom: 10px;
+      color: #cdb4db;
+    }
+    .content-section p {
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease;
+    }
+    .project:hover {
+      transform: scale(1.05);
+    }
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: none;
+    }
+    form button {
+      background: #6a0dad;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #7e3ff2;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll("nav ul li a");
+      const pages = document.querySelectorAll(".page");
+      
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if (page.id === pageID) {
+            page.classList.add("active");
+          }
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute("data-target");
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(targetPage);
+        });
+      });
+      
+      // Set default active page.
+      setActivePage("home");
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#" data-target="home" class="active">Home</a></li>
+        <li><a href="#" data-target="news">News</a></li>
+        <li><a href="#" data-target="blog">Blog</a></li>
+        <li><a href="#" data-target="portfolio">Portfolio</a></li>
+        <li><a href="#" data-target="about">About</a></li>
+        <li><a href="#" data-target="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="container">
+    <!-- Home Page -->
+    <div id="home" class="page active">
+      <h1>Welcome to the Portal</h1>
+      <div class="content-section">
+        <h2>Discover Digital Realms</h2>
+        <p>Step into a world where technology meets creativity. Our portal offers the latest news, in-depth blogs, and a showcase of creative projects.</p>
+        <p>Enjoy an immersive experience designed with a blend of modern aesthetics and mystical charm.</p>
+      </div>
+      <div class="content-section">
+        <h2>Highlights</h2>
+        <p>Explore our exclusive sections, each uniquely tailored to deliver engaging and informative content.</p>
+      </div>
+    </div>
+    
+    <!-- News Page -->
+    <div id="news" class="page">
+      <h1>Latest News</h1>
+      <div class="content-section">
+        <h2>Breaking Stories</h2>
+        <p>Stay informed with up-to-the-minute news covering a broad spectrum of topics from technology trends to global events.</p>
+      </div>
+      <div class="content-section">
+        <h2>In-Depth Analysis</h2>
+        <p>Our team provides detailed analysis and commentary on the stories that shape our world.</p>
+      </div>
+      <div class="content-section">
+        <h2>Special Reports</h2>
+        <p>Exclusive reports and investigative pieces that delve deep into subjects of significance.</p>
+      </div>
+    </div>
+    
+    <!-- Blog Page -->
+    <div id="blog" class="page">
+      <h1>Insights &amp; Thoughts</h1>
+      <div class="content-section">
+        <h2>Editorial Musings</h2>
+        <p>Dive into thoughtful articles penned by experts and enthusiasts alike. Discover opinions and reflections on a myriad of topics.</p>
+      </div>
+      <div class="content-section">
+        <h2>Creative Narratives</h2>
+        <p>Experience personal stories, creative experiments, and the intersection of art and technology through our blog.</p>
+      </div>
+      <div class="content-section">
+        <h2>Community Voices</h2>
+        <p>Read guest posts and community contributions that provide fresh perspectives and dynamic insights.</p>
+      </div>
+    </div>
+    
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page">
+      <h1>Creative Portfolio</h1>
+      <div class="content-section">
+        <h2>Featured Projects</h2>
+        <p>Explore a curated selection of creative projects that blend art, technology, and innovation.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="project">
+          <h3>Project Alpha</h3>
+          <p>A groundbreaking interface design that redefines user engagement.</p>
+        </div>
+        <div class="project">
+          <h3>Project Beta</h3>
+          <p>An innovative web application that combines functionality with artistic flair.</p>
+        </div>
+        <div class="project">
+          <h3>Project Gamma</h3>
+          <p>A dynamic digital art installation that transforms interactive media.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- About Page -->
+    <div id="about" class="page">
+      <h1>About This Portal</h1>
+      <div class="content-section">
+        <h2>Our Vision</h2>
+        <p>This portal is a unique blend of news, analysis, creative insights, and digital artistry. It’s designed to be both informative and visually inspiring.</p>
+      </div>
+      <div class="content-section">
+        <h2>The Random Muse</h2>
+        <p>Ever wondered why stars twinkle or how a random thought becomes a revolutionary idea? Here, we celebrate the unpredictable and the extraordinary.</p>
+        <p>In a world full of predictable headlines, our approach is to deliver content that is as spontaneous and refreshing as a burst of cosmic energy.</p>
+      </div>
+      <div class="content-section">
+        <h2>Owner &amp; Creator</h2>
+        <p>This script is proudly owned and developed by <a href="https://github.com/razberi-py" target="_blank">Razberi</a>. With a passion for coding, creativity, and delivering engaging digital experiences, Razberi continues to push the boundaries of what's possible.</p>
+      </div>
+    </div>
+    
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+      <h1>Contact Us</h1>
+      <div class="content-section">
+        <h2>Get In Touch</h2>
+        <p>If you have any inquiries, collaboration proposals, or simply want to share your thoughts, please use the form below.</p>
+      </div>
+      <form>
+        <input type="text" placeholder="Your Name" required style="width:100%; padding:10px; margin-bottom:10px;">
+        <input type="email" placeholder="Your Email" required style="width:100%; padding:10px; margin-bottom:10px;">
+        <textarea placeholder="Your Message" rows="5" required style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
+        <button type="submit" style="width:100%; padding:10px; background:#6a0dad; border:none; border-radius:4px; font-size:1.1em; cursor:pointer;">Send Message</button>
+      </form>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Mystical Multi-View Portal. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

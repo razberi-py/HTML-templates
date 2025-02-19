@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>In-Depth News Portal</title>
+  <style>
+    /* Reset and Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #12151a;
+      color: #d0d7de;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Navigation & Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #1c2533;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      z-index: 1000;
+      padding: 15px 0;
+      transition: background 0.3s ease;
+    }
+    header:hover { background: #2c3e50; }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav li { }
+    nav li a {
+      font-size: 1.1em;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    nav li a:hover,
+    nav li a.active {
+      background: #3e5871;
+      transform: scale(1.05);
+    }
+    
+    /* Container */
+    .container {
+      position: relative;
+      top: 80px;
+      padding: 40px 20px;
+      min-height: calc(100vh - 80px);
+    }
+    
+    /* Page Base Style */
+    .page {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+      padding-bottom: 80px;
+    }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* News Page Styles */
+    #news {
+      background: #162029;
+      padding: 30px;
+    }
+    #news h1 {
+      margin-bottom: 20px;
+      color: #f1f1f1;
+      border-bottom: 2px solid #3e5871;
+      padding-bottom: 10px;
+    }
+    .news-articles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .article {
+      background: #1e2a38;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+    .article img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .article-content {
+      padding: 15px;
+    }
+    .article-content h2 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+      color: #f8f8f8;
+    }
+    .article-content p {
+      font-size: 0.95em;
+      color: #b0bec5;
+    }
+    /* Subscription form styles for News */
+    .subscription {
+      background: #1e2a38;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .subscription h3 { margin-bottom: 15px; }
+    .subscription input[type="email"] {
+      width: 80%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 1em;
+    }
+    .subscription button {
+      padding: 10px 20px;
+      background: #3e5871;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .subscription button:hover { background: #5a7aa1; }
+    
+    /* Blog Page Styles */
+    #blog {
+      background: #131920;
+      padding: 30px;
+    }
+    #blog h1 {
+      margin-bottom: 20px;
+      color: #f1f1f1;
+      border-bottom: 2px solid #3e5871;
+      padding-bottom: 10px;
+    }
+    .blog-articles {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .blog-article {
+      background: #1e2835;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .blog-article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+    .blog-article h2 {
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      color: #f8f8f8;
+    }
+    .blog-article p {
+      font-size: 1em;
+      color: #b0bec5;
+    }
+    
+    /* Portfolio Page Styles */
+    #portfolio {
+      background: #10151a;
+      padding: 30px;
+    }
+    #portfolio h1 {
+      margin-bottom: 20px;
+      color: #f1f1f1;
+      border-bottom: 2px solid #3e5871;
+      padding-bottom: 10px;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background: #1e2835;
+      padding: 20px;
+      border-radius: 8px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+    .project h3 { color: #f8f8f8; margin-bottom: 10px; }
+    .project p { color: #b0bec5; font-size: 0.95em; }
+    
+    /* About Page Styles */
+    #about {
+      background: #0f1317;
+      padding: 30px;
+      text-align: center;
+    }
+    #about h1 {
+      margin-bottom: 20px;
+      color: #f1f1f1;
+      border-bottom: 2px solid #3e5871;
+      padding-bottom: 10px;
+    }
+    #about .bio {
+      max-width: 800px;
+      margin: 20px auto;
+      color: #b0bec5;
+      font-size: 1.05em;
+      line-height: 1.8;
+    }
+    #about .credits {
+      margin-top: 30px;
+      font-size: 0.95em;
+      color: #7a869a;
+    }
+    #about .credits a {
+      color: #a0c4ff;
+    }
+    
+    /* Contact Page Styles */
+    #contact {
+      background: #10151a;
+      padding: 30px;
+    }
+    #contact h1 {
+      margin-bottom: 20px;
+      color: #f1f1f1;
+      border-bottom: 2px solid #3e5871;
+      padding-bottom: 10px;
+    }
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #1e2835;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    }
+    #contact form input,
+    #contact form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    #contact form button {
+      width: 100%;
+      padding: 12px;
+      background: #3e5871;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #contact form button:hover { background: #5a7aa1; }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1c2533;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 0.9em;
+      color: #7a869a;
+    }
+    
+    /* Additional Animations & Hover Effects */
+    .hover-glow:hover {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll("nav ul li a");
+      const pages = document.querySelectorAll(".page");
+
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if (page.id === pageID) { page.classList.add("active"); }
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute("data-target");
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(targetPage);
+        });
+      });
+      
+      // Set default active page to Home.
+      setActivePage("home");
+    });
+  </script>
+</head>
+<body>
+  <!-- HEADER & NAVIGATION -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#" data-target="home" class="active">Home</a></li>
+        <li><a href="#" data-target="news">News</a></li>
+        <li><a href="#" data-target="blog">Blog</a></li>
+        <li><a href="#" data-target="portfolio">Portfolio</a></li>
+        <li><a href="#" data-target="about">About</a></li>
+        <li><a href="#" data-target="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- MAIN CONTENT CONTAINER -->
+  <div class="container">
+    <!-- Home Page -->
+    <div id="home" class="page active">
+      <h1>Welcome to The Daily Oracle</h1>
+      <p>Discover the most thought‑provoking news and insightful stories, curated to inform and inspire. Explore our diverse sections—from breaking news to personal blog reflections.</p>
+    </div>
+    
+    <!-- News Page -->
+    <div id="news" class="page">
+      <h1>Latest News</h1>
+      <div class="news-articles">
+        <div class="article hover-glow">
+          <img src="https://via.placeholder.com/400x180/1e2a38/ffffff?text=News+Image+1" alt="News 1">
+          <div class="article-content">
+            <h2>Global Market Shifts Amid New Tech Trends</h2>
+            <p>An in‑depth look at how emerging technologies are reshaping the global economy.</p>
+          </div>
+        </div>
+        <div class="article hover-glow">
+          <img src="https://via.placeholder.com/400x180/1e2a38/ffffff?text=News+Image+2" alt="News 2">
+          <div class="article-content">
+            <h2>Revolution in Renewable Energy</h2>
+            <p>How innovative solutions are changing the energy landscape and driving sustainability.</p>
+          </div>
+        </div>
+        <div class="article hover-glow">
+          <img src="https://via.placeholder.com/400x180/1e2a38/ffffff?text=News+Image+3" alt="News 3">
+          <div class="article-content">
+            <h2>Political Shifts: A New Era</h2>
+            <p>Analysts discuss the implications of recent political developments on global affairs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="subscription">
+        <h3>Subscribe for Daily Updates</h3>
+        <form>
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Blog Page -->
+    <div id="blog" class="page">
+      <h1>Personal Blog</h1>
+      <div class="blog-articles">
+        <div class="blog-article hover-glow">
+          <h2>Embracing the Chaos: My Journey into the Unknown</h2>
+          <p>In this post, I share how stepping out of my comfort zone led to unexpected breakthroughs.</p>
+        </div>
+        <div class="blog-article hover-glow">
+          <h2>Reflections on a Digital Renaissance</h2>
+          <p>Thoughts on how technology and art converge to redefine our modern existence.</p>
+        </div>
+        <div class="blog-article hover-glow">
+          <h2>The Hidden Magic of Everyday Moments</h2>
+          <p>A personal account of finding inspiration in the simplest aspects of life.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page">
+      <h1>Creative Portfolio</h1>
+      <div class="portfolio-grid">
+        <div class="project hover-glow">
+          <h3>Project Aurora</h3>
+          <p>An innovative design project merging digital art with interactive media.</p>
+        </div>
+        <div class="project hover-glow">
+          <h3>Project Nebula</h3>
+          <p>A cutting-edge web application that redefines user experience through immersive design.</p>
+        </div>
+        <div class="project hover-glow">
+          <h3>Project Eclipse</h3>
+          <p>An experimental project exploring the boundaries between technology and creativity.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- About Page -->
+    <div id="about" class="page">
+      <h1>About The Daily Oracle</h1>
+      <div class="bio">
+        <p>The Daily Oracle is a convergence of art, technology, and journalism. Born from a passion for uncovering truth and celebrating creativity, this portal delivers rich, in‑depth articles and multimedia stories that captivate and inspire.</p>
+        <p>Whether you’re here for breaking news, thoughtful blog posts, or creative showcases, our mission is to provide a space where ideas and innovation flourish.</p>
+      </div>
+      <div class="credits">
+        <p>Script owned and developed by <a href="https://github.com/razberi-py" target="_blank">Razberi</a></p>
+      </div>
+    </div>
+    
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+      <h1>Contact Us</h1>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 The Daily Oracle. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
