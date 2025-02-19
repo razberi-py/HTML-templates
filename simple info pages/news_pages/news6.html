@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spectrum Pulse News</title>
+  <style>
+    /* RESET & BASE */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: #f4f9f9; /* light, airy background */
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ANIMATED BACKGROUND PATTERN */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 128, 128, 0.15), transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.15), transparent 50%);
+      z-index: -2;
+      animation: bgRotate 25s linear infinite;
+    }
+    @keyframes bgRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      z-index: -1;
+    }
+
+    /* HEADER & NAVIGATION */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #008080, #ffd700);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      z-index: 1000;
+      padding: 15px 0;
+      transition: background 0.3s ease;
+    }
+    header:hover { background: linear-gradient(90deg, #ffd700, #008080); }
+    header h1 {
+      text-align: center;
+      font-size: 2.8em;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav ul li a {
+      padding: 10px 18px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.35);
+      color: #fff;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s, border 0.3s;
+      border: 2px solid transparent;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      background: rgba(255,255,255,0.9);
+      color: #008080;
+      transform: scale(1.08);
+      box-shadow: 0 0 10px rgba(0,128,128,0.8);
+      border: 2px solid #008080;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      margin-top: 120px;
+      padding: 40px 5%;
+      min-height: calc(100vh - 120px);
+    }
+
+    /* PAGE BASE STYLES */
+    .page { display: none; animation: fadeIn 0.6s ease-in-out; padding-bottom: 80px; }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* NEWS PAGE */
+    #news { background: #fff; border-radius: 8px; padding: 30px; border: 2px solid #008080; }
+    #news h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.4em;
+      color: #008080;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+    .news-articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .article {
+      background: #f9f9f9;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: transform 0.4s ease, border 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      padding-bottom: 50px;
+    }
+    .article:hover {
+      transform: translateY(-5px);
+      border: 2px solid #ffd700;
+      box-shadow: 0 4px 12px rgba(0, 128, 128, 0.4);
+    }
+    .article img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .article-content { padding: 15px; }
+    .article-content h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .article-content p { font-size: 1em; color: #555; }
+    .article .like-btn, .article .read-more {
+      position: absolute;
+      bottom: 10px;
+      background: #008080;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .article .like-btn:hover, .article .read-more:hover { background: #ffd700; }
+    .article .like-btn { left: 10px; }
+    .article .read-more { right: 10px; }
+    .article .like-count {
+      position: absolute;
+      bottom: 10px;
+      left: 90px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .subscription {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 30px auto 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border: 2px solid #008080;
+    }
+    .subscription h3 { margin-bottom: 15px; color: #008080; }
+    .subscription input[type="email"] {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 1em;
+    }
+    .subscription button {
+      padding: 10px 20px;
+      background: #ffd700;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      color: #008080;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .subscription button:hover { background: #ffea80; }
+
+    /* BLOG PAGE */
+    #blog { background: #fff; border-radius: 8px; padding: 30px; border: 2px solid #008080; }
+    #blog h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.4em;
+      color: #008080;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+    .blog-articles { display: flex; flex-direction: column; gap: 25px; }
+    .blog-article {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+    .blog-article:hover {
+      transform: translateY(-5px);
+      border: 2px solid #ffd700;
+      box-shadow: 0 4px 12px rgba(0, 128, 128, 0.4);
+    }
+    .blog-article h2 {
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .blog-article p { font-size: 1em; color: #555; }
+    .blog-article .favorite-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #008080;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .blog-article .favorite-btn:hover { background: #ffd700; }
+
+    /* PORTFOLIO PAGE */
+    #portfolio { background: #fff; border-radius: 8px; padding: 30px; border: 2px solid #008080; }
+    #portfolio h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.4em;
+      color: #008080;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .project {
+      background: #f9f9f9;
+      padding: 20px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: transform 0.4s ease, border 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      border: 2px solid #ffd700;
+      box-shadow: 0 4px 12px rgba(0, 128, 128, 0.4);
+    }
+    .project h3 { color: #333; margin-bottom: 10px; }
+    .project p { font-size: 0.95em; color: #555; }
+    .project .view-details {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #008080;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .project .view-details:hover { background: #ffd700; }
+    .project .details {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    /* ABOUT PAGE */
+    #about { background: #fff; border-radius: 8px; padding: 30px; text-align: center; border: 2px solid #008080; }
+    #about h1 {
+      margin-bottom: 20px;
+      font-size: 2.4em;
+      color: #008080;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+    #about .bio {
+      max-width: 800px;
+      margin: 20px auto;
+      font-size: 1.1em;
+      color: #555;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    #about .credits {
+      margin-top: 30px;
+      font-size: 0.9em;
+    }
+    #about .credits a { color: #008080; font-weight: bold; }
+    #about .random-fact {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #fff5e6;
+      border: 2px dashed #ffd700;
+      border-radius: 4px;
+      color: #ff00ff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #about .random-fact:hover { background: #ffe6cc; }
+
+    /* CONTACT PAGE */
+    #contact { background: #fff; border-radius: 8px; padding: 30px; border: 2px solid #008080; }
+    #contact h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.4em;
+      color: #008080;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #contact form input,
+    #contact form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    #contact form button {
+      width: 100%;
+      padding: 12px;
+      background: #ffd700;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1em;
+      color: #008080;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #contact form button:hover { background: #ffea80; }
+
+    /* FOOTER */
+    footer {
+      background: #008080;
+      color: #fff;
+      text-align: center;
+      padding: 15px 5%;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll("nav ul li a");
+      const pages = document.querySelectorAll(".page");
+
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if (page.id === pageID) { page.classList.add("active"); }
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute("data-target");
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(targetPage);
+        });
+      });
+      
+      // Set default active page to News.
+      setActivePage("news");
+
+      /* NEWS PAGE FUNCTIONALITY */
+      document.querySelectorAll(".article").forEach(article => {
+        const likeBtn = article.querySelector(".like-btn");
+        const likeCountEl = article.querySelector(".like-count");
+        let likeCount = 0;
+        if(likeBtn){
+          likeBtn.addEventListener("click", () => {
+            likeCount++;
+            likeCountEl.textContent = `Likes: ${likeCount}`;
+          });
+        }
+        const readMoreBtn = article.querySelector(".read-more");
+        if(readMoreBtn){
+          readMoreBtn.addEventListener("click", () => {
+            const para = article.querySelector("p");
+            if(para.dataset.expanded === "true"){
+              para.textContent = para.dataset.short;
+              para.dataset.expanded = "false";
+              readMoreBtn.textContent = "Read More";
+            } else {
+              para.textContent = para.dataset.full;
+              para.dataset.expanded = "true";
+              readMoreBtn.textContent = "Show Less";
+            }
+          });
+        }
+      });
+      
+      /* BLOG PAGE FUNCTIONALITY */
+      document.querySelectorAll(".blog-article").forEach(article => {
+        const favBtn = article.querySelector(".favorite-btn");
+        let favCount = 0;
+        if(favBtn){
+          favBtn.addEventListener("click", () => {
+            favCount++;
+            favBtn.textContent = `♥ ${favCount}`;
+          });
+        }
+      });
+      
+      /* PORTFOLIO PAGE FUNCTIONALITY */
+      document.querySelectorAll(".project").forEach(project => {
+        const viewBtn = project.querySelector(".view-details");
+        const details = project.querySelector(".details");
+        if(viewBtn){
+          viewBtn.addEventListener("click", () => {
+            if(details.style.display === "block"){
+              details.style.display = "none";
+              viewBtn.textContent = "View Details";
+            } else {
+              details.style.display = "block";
+              viewBtn.textContent = "Hide Details";
+            }
+          });
+        }
+      });
+      
+      /* ABOUT PAGE FUNCTIONALITY */
+      const randomFactBtn = document.querySelector("#about .random-fact");
+      if(randomFactBtn){
+        const facts = [
+          "Honey never spoils.",
+          "Bananas are berries, but strawberries are not.",
+          "There are more stars in the universe than grains of sand on Earth.",
+          "A day on Venus is longer than its year."
+        ];
+        randomFactBtn.addEventListener("click", () => {
+          const fact = facts[Math.floor(Math.random() * facts.length)];
+          alert("Random Fact: " + fact);
+        });
+      }
+      
+      /* CONTACT PAGE FUNCTIONALITY */
+      const contactForm = document.querySelector("#contact form");
+      if(contactForm){
+        contactForm.addEventListener("submit", function(e) {
+          e.preventDefault();
+          alert("Thank you for contacting us! We'll be in touch soon.");
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- HEADER & NAVIGATION -->
+  <header>
+    <h1>Spectrum Pulse News</h1>
+    <nav>
+      <ul>
+        <li><a href="#" data-target="news" class="active">News</a></li>
+        <li><a href="#" data-target="blog">Blog</a></li>
+        <li><a href="#" data-target="portfolio">Portfolio</a></li>
+        <li><a href="#" data-target="about">About</a></li>
+        <li><a href="#" data-target="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <!-- NEWS PAGE -->
+    <div id="news" class="page active">
+      <h1>Top Stories</h1>
+      <div class="news-articles">
+        <div class="article">
+          <img src="https://via.placeholder.com/400x180/ffffff/008080?text=News+1" alt="News 1">
+          <div class="article-content">
+            <h2>Economic Shifts in a Digital Age</h2>
+            <p data-short="The economy is evolving." data-full="The economy is evolving rapidly due to digital transformation, changing market trends, and emerging technologies. Experts anticipate a new era of business innovation." data-expanded="false">
+              The economy is evolving.
+            </p>
+          </div>
+          <button class="like-btn">Like</button>
+          <span class="like-count">Likes: 0</span>
+          <button class="read-more">Read More</button>
+        </div>
+        <div class="article">
+          <img src="https://via.placeholder.com/400x180/ffffff/008080?text=News+2" alt="News 2">
+          <div class="article-content">
+            <h2>Breakthroughs in Renewable Energy</h2>
+            <p data-short="Green tech is on the rise." data-full="Renewable energy is taking center stage as breakthroughs in solar and wind power drive sustainable living. Investment in green technology is reaching new heights." data-expanded="false">
+              Green tech is on the rise.
+            </p>
+          </div>
+          <button class="like-btn">Like</button>
+          <span class="like-count">Likes: 0</span>
+          <button class="read-more">Read More</button>
+        </div>
+      </div>
+      <div class="subscription">
+        <h3>Subscribe for Daily Updates</h3>
+        <form>
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- BLOG PAGE -->
+    <div id="blog" class="page">
+      <h1>Personal Musings</h1>
+      <div class="blog-articles">
+        <div class="blog-article">
+          <h2>The Art of Living Boldly</h2>
+          <p>Discover how embracing risk and creativity can lead to a richer, more fulfilled life.</p>
+          <button class="favorite-btn">♥ 0</button>
+        </div>
+        <div class="blog-article">
+          <h2>Reflections on Modern Society</h2>
+          <p>A contemplative look at the interplay between technology, culture, and our everyday lives.</p>
+          <button class="favorite-btn">♥ 0</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- PORTFOLIO PAGE -->
+    <div id="portfolio" class="page">
+      <h1>Creative Showcase</h1>
+      <div class="portfolio-grid">
+        <div class="project">
+          <h3>Project Aurora</h3>
+          <p>An innovative design merging digital art with interactive media.</p>
+          <button class="view-details">View Details</button>
+          <div class="details">Detailed information about Project Aurora, including design philosophy and technology used.</div>
+        </div>
+        <div class="project">
+          <h3>Project Nebula</h3>
+          <p>An immersive web experience exploring cosmic phenomena through art.</p>
+          <button class="view-details">View Details</button>
+          <div class="details">Detailed information about Project Nebula, highlighting interactive features and creative vision.</div>
+        </div>
+        <div class="project">
+          <h3>Project Eclipse</h3>
+          <p>A daring fusion of art and technology challenging conventional design.</p>
+          <button class="view-details">View Details</button>
+          <div class="details">Detailed information about Project Eclipse, outlining experimental techniques and innovative design solutions.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+      <h1>About Spectrum Pulse News</h1>
+      <div class="bio">
+        <p>Spectrum Pulse News is a dynamic portal where vibrant storytelling meets innovative journalism. We combine in‑depth news, personal reflections, and creative showcases to deliver content that both informs and inspires.</p>
+        <p>Our mission is to offer a colorful blend of insightful articles, interactive features, and multimedia experiences that resonate with a diverse audience.</p>
+      </div>
+      <div class="credits">
+        <p>Script owned and developed by <a href="https://github.com/razberi-py" target="_blank">Razberi</a></p>
+      </div>
+      <div class="random-fact">Click for a Random Fact</div>
+    </div>
+    
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+      <h1>Contact Us</h1>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Spectrum Pulse News. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
