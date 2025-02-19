@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Daily Gazette</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdfaf3; /* Cream background */
+      color: #222;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: #222; }
+    
+    /* Header & Masthead */
+    header {
+      background: #fff;
+      border-bottom: 2px solid #aaa;
+      padding: 20px 10%;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      font-size: 3em;
+      font-family: 'Times New Roman', Times, serif;
+      letter-spacing: 2px;
+      color: #222;
+    }
+    /* Navigation Bar */
+    nav {
+      margin-top: 10px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 1.1em;
+    }
+    nav ul li a {
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      border-color: #222;
+      background-color: #eee;
+      transform: scale(1.05);
+    }
+    
+    /* Main Container */
+    .container {
+      margin-top: 140px;
+      padding: 40px 10%;
+      min-height: calc(100vh - 140px);
+    }
+    
+    /* Page Base */
+    .page { display: none; animation: fadeIn 0.5s ease-in-out; }
+    .page.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Newspaper Article Layout */
+    .article {
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #ccc;
+      column-count: 2;
+      column-gap: 40px;
+    }
+    .article h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      text-align: center;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #222;
+      padding-bottom: 5px;
+    }
+    .article p { 
+      text-align: justify; 
+      margin-bottom: 12px; 
+    }
+    .article .byline {
+      font-size: 0.9em;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    
+    /* News Page */
+    #news { background: #fdfaf3; }
+    #news .articles { display: flex; flex-direction: column; gap: 50px; }
+    
+    /* Blog Page */
+    #blog { background: #fdfaf3; }
+    #blog .articles { display: flex; flex-direction: column; gap: 50px; }
+    
+    /* Portfolio Page */
+    #portfolio {
+      background: #fdfaf3;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .project h3 {
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      text-align: center;
+    }
+    .project p { font-size: 0.95em; }
+    
+    /* About Page */
+    #about {
+      background: #fdfaf3;
+      text-align: center;
+      padding: 40px;
+    }
+    #about .bio {
+      max-width: 800px;
+      margin: 20px auto;
+      font-size: 1.1em;
+      text-align: justify;
+      line-height: 1.8;
+    }
+    #about .credits {
+      margin-top: 30px;
+      font-size: 0.9em;
+    }
+    #about .credits a { color: #222; font-weight: bold; }
+    
+    /* Contact Page */
+    #contact { background: #fdfaf3; }
+    #contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #contact form input,
+    #contact form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    #contact form button {
+      width: 100%;
+      padding: 12px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #contact form button:hover { background: #444; }
+    
+    /* Footer */
+    footer {
+      background: #1c1c1c;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 10%;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5em; }
+      nav ul { gap: 15px; }
+      .article { column-count: 1; }
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const navLinks = document.querySelectorAll("nav ul li a");
+      const pages = document.querySelectorAll(".page");
+      
+      function setActivePage(pageID) {
+        pages.forEach(page => {
+          page.classList.remove("active");
+          if (page.id === pageID) { page.classList.add("active"); }
+        });
+      }
+      
+      function clearActiveNav() {
+        navLinks.forEach(link => link.classList.remove("active"));
+      }
+      
+      navLinks.forEach(link => {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute("data-target");
+          clearActiveNav();
+          this.classList.add("active");
+          setActivePage(targetPage);
+        });
+      });
+      
+      // Set default active page to News
+      setActivePage("news");
+    });
+  </script>
+</head>
+<body>
+  <!-- HEADER & NAVIGATION -->
+  <header>
+    <h1>The Daily Gazette</h1>
+    <nav>
+      <ul>
+        <li><a href="#" data-target="news" class="active">News</a></li>
+        <li><a href="#" data-target="blog">Blog</a></li>
+        <li><a href="#" data-target="portfolio">Portfolio</a></li>
+        <li><a href="#" data-target="about">About</a></li>
+        <li><a href="#" data-target="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- MAIN CONTENT CONTAINER -->
+  <div class="container">
+    <!-- News Page -->
+    <div id="news" class="page active">
+      <h1>Top Stories</h1>
+      <div class="articles">
+        <div class="article">
+          <h2>Economic Shifts in a Post-Pandemic World</h2>
+          <div class="byline">By Jane Reporter | October 12, 2025</div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel lacus vel justo sollicitudin sollicitudin. Sed nec convallis tortor. Aliquam erat volutpat. Nulla facilisi. Quisque vehicula, purus ac dapibus tristique, ex libero blandit leo, sed porta neque lorem vitae nisl.</p>
+          <p>Curabitur scelerisque, nibh in ullamcorper tristique, lacus urna pulvinar leo, ac ultricies purus tortor ut metus. In hac habitasse platea dictumst. Fusce condimentum.</p>
+        </div>
+        <div class="article">
+          <h2>New Renewable Energy Breakthroughs</h2>
+          <div class="byline">By John Analyst | October 11, 2025</div>
+          <p>Suspendisse potenti. Integer vulputate leo sed mi tincidunt, at malesuada tortor dignissim. Fusce eget massa arcu. Donec congue mauris vel eros volutpat, at semper lorem consectetur. Morbi sit amet libero eget sem tristique convallis.</p>
+          <p>Vivamus a elit eu justo dignissim commodo. Nam non varius nibh. Nulla facilisi.</p>
+        </div>
+      </div>
+      <div class="subscription">
+        <h3>Subscribe for Daily Updates</h3>
+        <form>
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Blog Page -->
+    <div id="blog" class="page">
+      <h1>Personal Musings</h1>
+      <div class="articles">
+        <div class="article">
+          <h2>The Art of Slow Journalism</h2>
+          <div class="byline">By Editor &amp; Author | October 10, 2025</div>
+          <p>In an age of instant updates, I find solace in the deliberate, thoughtful pace of traditional reporting. In this piece, I explore the beauty of taking one's time to craft a story that resonates with depth and humanity.</p>
+          <p>Morbi volutpat, arcu ac cursus dictum, lorem arcu vehicula ex, a pretium quam libero vitae urna.</p>
+        </div>
+        <div class="article">
+          <h2>Reflections on Life and Literature</h2>
+          <div class="byline">By Editor &amp; Author | October 9, 2025</div>
+          <p>Sometimes, the best insights come from the pages of a well-worn book. Join me as I discuss my favorite literary works and the timeless wisdom they impart.</p>
+          <p>Sed in mauris non velit maximus auctor. Duis non risus a nulla efficitur commodo.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page">
+      <h1>Our Creative Showcase</h1>
+      <div class="portfolio-grid">
+        <div class="project">
+          <h3>Project Aurora</h3>
+          <p>A multimedia exploration of light and color that pushes the boundaries of digital art.</p>
+        </div>
+        <div class="project">
+          <h3>Project Nebula</h3>
+          <p>An interactive web experience that invites users to explore cosmic phenomena through immersive design.</p>
+        </div>
+        <div class="project">
+          <h3>Project Eclipse</h3>
+          <p>A daring fusion of traditional journalism and modern technology, capturing the essence of our times.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- About Page -->
+    <div id="about" class="page">
+      <h1>About The Daily Gazette</h1>
+      <div class="bio">
+        <p>The Daily Gazette is more than just a news portal—it’s a platform where tradition meets innovation. We blend rigorous reporting with creative storytelling to deliver news that informs, inspires, and provokes thought.</p>
+        <p>Our team is committed to maintaining the integrity of journalism while embracing the dynamic energy of the digital age. Every article is a testament to our dedication to uncovering truth and celebrating creativity.</p>
+      </div>
+      <div class="credits">
+        <p>Script owned and developed by <a href="https://github.com/razberi-py" target="_blank">Razberi</a></p>
+      </div>
+    </div>
+    
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+      <h1>Contact Us</h1>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 The Daily Gazette. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
