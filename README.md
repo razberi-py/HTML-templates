@@ -1,9 +1,4 @@
 
-
-# ║ 🌟 The Vision 🌟 ║ 
-
-Welcome to the **[ HTML - Templates ]** repository! This project is focused on achieving cutting-edge innovation while blending functionality with stunning design.
-
 ## 🌌 Goals
 
 ╔════════════════════════════════════════════╗
@@ -30,12 +25,13 @@ Welcome to the **[ HTML - Templates ]** repository! This project is focused on a
 This is updated as of 12/25/24 8:00AM
 
 - [ ✅ ] Dynamic Login/Sign-Up Pages  
-- [ ❌ ] Multi-Theme Support  
+- [ ✅ ] Multi-Theme Support  
 - [ ✅ ] Animated Loading Screen  
-- [ 🛠️ ] 60+ / 150 templates goal
+- [ 🛠️ ] 80+ / 150 templates goal
 - [ ✅ ] Basic Templates
-- [ 🛠️ ] Website
+- [ ✅ ] Website
 - [ 🛠️ ] Discord Server
+- [ 🛠️ ] Multi tool for projects
 - More Coming soon
 
 ---
