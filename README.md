@@ -29,8 +29,8 @@ This is updated as of 12/25/24 8:00AM
 - [ ✅ ] Animated Loading Screen  
 - [ 🛠️ ] 80+ / 150 templates goal
 - [ ✅ ] Basic Templates
-- [ ✅ ] Website
-- [ 🛠️ ] Discord Server
+- [ ❌ ] Website
+- [ ❌ ] Discord Server
 - [ 🛠️ ] Multi tool for projects
 - More Coming soon
 
